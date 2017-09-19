@@ -1,0 +1,22 @@
+.title {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.title h1 {
+    font-size: 30px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.title h2 {
+    font-size: 22px;
+    color: rgba(157,157,157,0.65);
+}
+
+.title a:hover{
+    text-decoration: none;
+}
+
+.title a:focus {
+    text-decoration: none;
+}

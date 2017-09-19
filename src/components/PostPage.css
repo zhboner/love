@@ -1,0 +1,22 @@
+.content p {
+    padding-bottom: 25px;
+    line-height: 200%;
+}
+
+.content ol, .content ul {
+    font-size: inherit;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    list-style-position: inside;
+}
+
+.content li {
+    list-style: disc;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.content img {
+    display: block;
+}
