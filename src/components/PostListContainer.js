@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
 
-import {getPosts} from '../services/Posts'
+import { getPosts } from '../services/posts'
+import { getCategoriesList } from '../services/categories';
 
 import PostListItem from './PostListItem';
-import { savePosts, saveTheAmountOfPosts } from '../actions'
+import { savePosts, saveTheAmountOfPosts, saveCategories } from '../actions'
 
 class PostListContainer extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class PostListContainer extends Component {
 
         this.loadPosts = this.loadPosts.bind(this);
         this.extractExcerpt = this.extractExcerpt.bind(this);
+        this.loadCategories = this.loadCategories.bind(this);
     }
 
     loadPosts() {
@@ -31,8 +33,8 @@ class PostListContainer extends Component {
                 const numberOfPosts = parseInt(response.headers['x-wp-total'], 10);
                 this.extractExcerpt(response.data);
 
-                this.props.dispatch(savePosts(response.data));
-                this.props.dispatch(saveTheAmountOfPosts(numberOfPosts));
+                this.props.persistCategories(response.data);
+                this.props.persistTheAmountOfPosts(numberOfPosts);
 
                 this.setState((prevState)=>{
                     return {
@@ -46,10 +48,16 @@ class PostListContainer extends Component {
         }
     }
 
+    loadCategories() {
+        getCategoriesList().then((response)=>{
+            console.log(response.data)
+        })
+    }
+
     extractExcerpt(postList) {
         postList.map((single)=>{
             let content = single.content.rendered;
-            let splitContent = content.split('<!--more-->');
+            let splitContent = content.split(new RegExp(/<p.*><!--more--><\/p>/, 'i'));
             single.excerpt.rendered = splitContent[0];
             single.content.rendered = splitContent[0].concat(splitContent[1]);
         })
@@ -65,6 +73,7 @@ class PostListContainer extends Component {
             return;
         }
         this.loadPosts();
+        this.loadCategories();
     }
 
     render() {
@@ -88,4 +97,18 @@ const mapStateToProps = (state)=>{
     }
 };
 
-export default connect(mapStateToProps)(PostListContainer)
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        persistCategories: (categories) => {
+            dispatch(saveCategories(categories))
+        },
+        persistPosts: (posts) => {
+            dispatch(savePosts(posts))
+        },
+        persistTheAmountOfPosts: (amount) => {
+            dispatch(saveTheAmountOfPosts(amount))
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostListContainer)

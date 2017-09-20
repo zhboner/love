@@ -3,7 +3,8 @@ const indexPage = (state, action) => {
         return {
             postList: [],
             pageNO: 1,
-            postAmount: 0
+            postAmount: 0,
+            categories: []
         }
     }
 
@@ -14,6 +15,8 @@ const indexPage = (state, action) => {
             return Object.assign({}, state, {pageNO: state.pageNO + 1});
         case 'SAVE_THE_AMOUNT_OF_POSTS':
             return Object.assign({}, state, {postAmount: action.value});
+        case 'SAVE_CATEGORIES':
+            return Object.assign({}, state, {categories: action.categories});
         default:
             return state;
     }

@@ -5,6 +5,13 @@ export const savePosts = (posts)=>{
     }
 };
 
+export const saveCategories = (categories)=>{
+    return {
+        type: 'SAVE_CATEGORIES',
+        categories: categories
+    }
+};
+
 export const increaseNavNO = ()=>{
     return {
         type: 'INCREASE_NAV_NO'

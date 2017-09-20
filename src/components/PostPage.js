@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { findPostBySlug } from '../services/Posts';
+import { findPostBySlug } from '../services/posts';
 import './PostPage.css';
 
 class PostPage extends Component {
