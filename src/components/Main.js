@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Row, Col } from 'antd';
+import { connect } from 'react-redux';
+
 import './Main.css';
-
-
 import Header from './Header';
 import PostListContainer from './PostListContainer';
 import PostPage from './PostPage';
 
-export default class Main extends Component {
+import { getCategoriesList } from '../services/categories';
+import { saveCategories } from '../actions'
+
+
+class Main extends Component {
     constructor(props){
         super(props);
+
+        this.loadCategories = this.loadCategories.bind(this);
+    }
+
+    componentWillMount() {
+        this.loadCategories();
+    }
+
+    loadCategories() {
+        getCategoriesList().then((response)=>{
+            let dict = {};
+            response.data.map((cat) => {
+                dict[cat.id] = cat.name;
+            });
+
+            this.props.persistCategories(dict);
+        })
     }
 
     render() {
@@ -35,3 +56,13 @@ export default class Main extends Component {
             )
     }
 }
+
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        persistCategories: (categories) => {
+            dispatch(saveCategories(categories))
+        }
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Main);

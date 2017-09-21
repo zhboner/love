@@ -10,7 +10,7 @@ const indexPage = (state, action) => {
 
     switch (action.type) {
         case 'SAVE_POSTS_LIST':
-            return Object.assign({}, state, {postList: state.postList.concat(action.posts)});
+            return Object.assign({}, state, {postList: action.posts});
         case 'INCREASE_NAV_NO':
             return Object.assign({}, state, {pageNO: state.pageNO + 1});
         case 'SAVE_THE_AMOUNT_OF_POSTS':

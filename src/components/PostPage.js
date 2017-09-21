@@ -13,6 +13,7 @@ class PostPage extends Component {
     }
 
     componentWillMount() {
+        // Find the post
         const slug = this.props.match.params.slug;
         findPostBySlug(slug, this.props.post).then(
             (result) => {
@@ -31,11 +32,16 @@ class PostPage extends Component {
             )
         }
 
+        let date = this.state.post.date.split('T')[0];
+
         let content = {__html: this.state.post.content.rendered};
 
         return (
             <div className="content">
                 <h3>{this.state.post.title.rendered}</h3>
+                <p className='subtitle'>
+                    {date}
+                </p>
                 <div dangerouslySetInnerHTML={content}/>
             </div>
         )
@@ -44,7 +50,8 @@ class PostPage extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-        post: state.postList
+        post: state.postList,
+        catDic: state.categories
     }
 };
 

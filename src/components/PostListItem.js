@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './PostListItem.css';
 
-export default class PostListItem extends Component {
+class PostListItem extends Component {
     constructor(props) {
         super(props);
     }
@@ -38,6 +39,12 @@ export default class PostListItem extends Component {
         )
 
     }
-
-
 }
+
+const mapStateToProps = (state) => {
+    return {
+        categories: state.categories
+    }
+};
+
+export default connect(mapStateToProps)(PostListItem);

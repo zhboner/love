@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Row, Col } from 'antd';
+import { Pagination  } from 'antd';
 
 import { getPosts, extractExcerpt } from '../services/posts'
-import { getCategoriesList } from '../services/categories';
 
 import PostListItem from './PostListItem';
-import { savePosts, saveTheAmountOfPosts, saveCategories } from '../actions'
+import { savePosts, saveTheAmountOfPosts } from '../actions'
 
 class PostListContainer extends Component {
     constructor(props) {
@@ -15,12 +14,12 @@ class PostListContainer extends Component {
             pageNO: 1,
             posts: [],
             numberOfPosts: null,
-            categories: {}
+            categories: this.props.categories
         };
 
         this.loadPosts = this.loadPosts.bind(this);
         this.extractExcerpt = this.extractExcerpt.bind(this);
-        this.loadCategories = this.loadCategories.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     loadPosts() {
@@ -29,7 +28,7 @@ class PostListContainer extends Component {
                 return;
             }
 
-            getPosts(this.state.pageNO).then((response)=>{
+            getPosts().then((response)=>{
                 console.log(response);
                 const numberOfPosts = parseInt(response.headers['x-wp-total'], 10);
                 this.extractExcerpt(response.data);
@@ -38,33 +37,14 @@ class PostListContainer extends Component {
                 this.props.persistPosts(response.data);
                 this.props.persistTheAmountOfPosts(numberOfPosts);
 
-                this.setState((prevState)=>{
-                    return {
-                        posts: prevState.posts.concat(response.data),
+                this.setState({
+                        posts: response.data,
                         numberOfPosts: numberOfPosts
-                    };
                 })
             }, (err)=>{
                 console.log(err);
             })
         }
-    }
-
-    loadCategories() {
-        getCategoriesList().then((response)=>{
-            console.log(response.data);
-            let dict = {};
-            response.data.map((cat) => {
-                dict[cat.id] = cat.name;
-            });
-
-
-
-            this.props.persistCategories(dict);
-            this.setState({
-                categories: dict
-            })
-        })
     }
 
     extractExcerpt(postList) {
@@ -73,6 +53,16 @@ class PostListContainer extends Component {
             let result = extractExcerpt(content);
             single.excerpt.rendered = result.excerpt;
             single.content.rendered = result.content;
+        })
+    }
+
+    handlePageChange(page) {
+        getPosts(page).then((response)=>{
+            this.extractExcerpt(response.data);
+            this.props.persistPosts(response.data);
+            this.setState({
+                posts: response.data
+            })
         })
     }
 
@@ -88,15 +78,6 @@ class PostListContainer extends Component {
         } else {
             this.loadPosts();
         }
-
-        // Check categories in store
-        if (this.props.categories === {}) {
-            this.setState({
-                categories: this.props.categories
-            })
-        } else {
-            this.loadCategories();
-        }
     }
 
     render() {
@@ -104,9 +85,10 @@ class PostListContainer extends Component {
             <div>
                 {this.state.posts.map((single)=>{
                     return (
-                        <PostListItem single={single} key={single.id} categories={this.state.categories}/>
+                        <PostListItem single={single} key={single.id}/>
                     )
                 })}
+                <Pagination onChange={this.handlePageChange} total={this.state.numberOfPosts} pageSize={10}/>
             </div>
         )
     }
@@ -123,9 +105,6 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
     return {
-        persistCategories: (categories) => {
-            dispatch(saveCategories(categories))
-        },
         persistPosts: (posts) => {
             dispatch(savePosts(posts))
         },
