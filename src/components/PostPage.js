@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import { findPostBySlug } from '../services/posts';
 import './PostPage.css';
@@ -17,7 +16,6 @@ class PostPage extends Component {
         const slug = this.props.match.params.slug;
         findPostBySlug(slug, this.props.post).then(
             (result) => {
-                console.log(result);
                 this.setState({
                     post: result
                 })
@@ -37,7 +35,6 @@ class PostPage extends Component {
 
         return (
             <div className="content" dangerouslySetInnerHTML={content}/>
-
         )
     }
 }
@@ -48,4 +45,4 @@ const mapStateToProps = (state)=>{
     }
 };
 
-export default connect(mapStateToProps)(withRouter(PostPage));
+export default connect(mapStateToProps)(PostPage);

@@ -20,11 +20,12 @@ export const findPostBySlug = (slug, postsList) => {
         if (target) {
             res(target)
         } else {
-            fetchPostBySluf(slug).then((response)=> {
+            fetchPostBySlug(slug).then((response)=> {
                 target = response.data[0];
                 if (!target) {
                     rej('Can\'t find in server');
                 } else {
+                    target.content.rendered = extractExcerpt(target.content.rendered).content;
                     res(target);
                 }
             }, (e)=>{
@@ -34,7 +35,23 @@ export const findPostBySlug = (slug, postsList) => {
     })
 };
 
-const fetchPostBySluf = (slug) => {
+export const extractExcerpt = (text) => {
+    let splitContent = text.split(new RegExp(/<p.*><!--more--><\/p>/, 'i'));
+    let excerpt = splitContent[0],
+        content = '';
+    if (splitContent[1]) {
+        content = splitContent[0].concat(splitContent[1]);
+    } else {
+        content = excerpt;
+    }
+
+    return {
+        excerpt: excerpt,
+        content: content
+    }
+}
+
+const fetchPostBySlug = (slug) => {
     return axios.get(prefix + 'posts?filter[name]=' + slug);
 };
 

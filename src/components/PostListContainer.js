@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
 
-import { getPosts } from '../services/posts'
+import { getPosts, extractExcerpt } from '../services/posts'
 import { getCategoriesList } from '../services/categories';
 
 import PostListItem from './PostListItem';
@@ -32,8 +32,9 @@ class PostListContainer extends Component {
                 console.log(response);
                 const numberOfPosts = parseInt(response.headers['x-wp-total'], 10);
                 this.extractExcerpt(response.data);
+                console.log(response.data);
 
-                this.props.persistCategories(response.data);
+                this.props.persistPosts(response.data);
                 this.props.persistTheAmountOfPosts(numberOfPosts);
 
                 this.setState((prevState)=>{
@@ -57,9 +58,9 @@ class PostListContainer extends Component {
     extractExcerpt(postList) {
         postList.map((single)=>{
             let content = single.content.rendered;
-            let splitContent = content.split(new RegExp(/<p.*><!--more--><\/p>/, 'i'));
-            single.excerpt.rendered = splitContent[0];
-            single.content.rendered = splitContent[0].concat(splitContent[1]);
+            let result = extractExcerpt(content);
+            single.excerpt.rendered = result.excerpt;
+            single.content.rendered = result.content;
         })
     }
 
@@ -80,6 +81,7 @@ class PostListContainer extends Component {
         return (
             <div>
                 {this.state.posts.map((single)=>{
+                    console.log(single)
                     return (
                         <PostListItem single={single} key={single.id}/>
                     )
