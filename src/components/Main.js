@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import './Main.css';
 import Header from './Header';
+import Footer from './Footer';
 import PostListContainer from './PostListContainer';
 import PostPage from './PostPage';
 
@@ -49,6 +50,11 @@ class Main extends Component {
                                 <Route exact path='/' component={PostListContainer}/>
                                 <Route path='/posts/:slug' component={PostPage}/>
                             </Switch>
+                        </Col>
+                    </Row>
+                    <Row className='footer'>
+                        <Col span={12} offset={6}>
+                            <Footer/>
                         </Col>
                     </Row>
                 </div>

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Pagination  } from 'antd';
+import { Row, Pagination  } from 'antd';
 
 import { getPosts, extractExcerpt } from '../services/posts'
 
 import PostListItem from './PostListItem';
 import { savePosts, saveTheAmountOfPosts } from '../actions'
+import './PostListContainer.css'
 
 class PostListContainer extends Component {
     constructor(props) {
@@ -82,13 +83,15 @@ class PostListContainer extends Component {
 
     render() {
         return (
-            <div>
+            <div className='post_list_container'>
                 {this.state.posts.map((single)=>{
                     return (
                         <PostListItem single={single} key={single.id}/>
                     )
                 })}
-                <Pagination onChange={this.handlePageChange} total={this.state.numberOfPosts} pageSize={10}/>
+                <Row justify='center' type='flex'>
+                    <Pagination className='pagination' onChange={this.handlePageChange} total={this.state.numberOfPosts} pageSize={10}/>
+                </Row>
             </div>
         )
     }
