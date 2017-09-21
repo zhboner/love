@@ -9,6 +9,10 @@ import PostListContainer from './PostListContainer';
 import PostPage from './PostPage';
 
 export default class Main extends Component {
+    constructor(props){
+        super(props);
+    }
+
     render() {
         return (
             <Router>

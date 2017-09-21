@@ -4,7 +4,7 @@ const indexPage = (state, action) => {
             postList: [],
             pageNO: 1,
             postAmount: 0,
-            categories: []
+            categories: {}
         }
     }
 

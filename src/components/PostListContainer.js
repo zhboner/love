@@ -14,7 +14,8 @@ class PostListContainer extends Component {
         this.state = {
             pageNO: 1,
             posts: [],
-            numberOfPosts: null
+            numberOfPosts: null,
+            categories: {}
         };
 
         this.loadPosts = this.loadPosts.bind(this);
@@ -51,7 +52,18 @@ class PostListContainer extends Component {
 
     loadCategories() {
         getCategoriesList().then((response)=>{
-            console.log(response.data)
+            console.log(response.data);
+            let dict = {};
+            response.data.map((cat) => {
+                dict[cat.id] = cat.name;
+            });
+
+
+
+            this.props.persistCategories(dict);
+            this.setState({
+                categories: dict
+            })
         })
     }
 
@@ -65,25 +77,34 @@ class PostListContainer extends Component {
     }
 
     componentWillMount() {
+
+        // Check posts in store. If it is available, load it directly
         if (this.props.posts.length !== 0) {
             this.setState({
                 pageNO: this.props.pageNO,
                 posts: this.props.posts,
                 numberOfPosts: this.props.numberOfPosts
             });
-            return;
+        } else {
+            this.loadPosts();
         }
-        this.loadPosts();
-        this.loadCategories();
+
+        // Check categories in store
+        if (this.props.categories === {}) {
+            this.setState({
+                categories: this.props.categories
+            })
+        } else {
+            this.loadCategories();
+        }
     }
 
     render() {
         return (
             <div>
                 {this.state.posts.map((single)=>{
-                    console.log(single)
                     return (
-                        <PostListItem single={single} key={single.id}/>
+                        <PostListItem single={single} key={single.id} categories={this.state.categories}/>
                     )
                 })}
             </div>
@@ -95,7 +116,8 @@ const mapStateToProps = (state)=>{
     return {
         pageNO: state.pageNO,
         numberOfPosts: state.postAmount,
-        posts: state.postList
+        posts: state.postList,
+        categories: state.categories
     }
 };
 

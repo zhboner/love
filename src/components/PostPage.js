@@ -34,7 +34,10 @@ class PostPage extends Component {
         let content = {__html: this.state.post.content.rendered};
 
         return (
-            <div className="content" dangerouslySetInnerHTML={content}/>
+            <div className="content">
+                <h3>{this.state.post.title.rendered}</h3>
+                <div dangerouslySetInnerHTML={content}/>
+            </div>
         )
     }
 }

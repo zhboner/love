@@ -3,6 +3,13 @@
     line-height: 200%;
 }
 
+.content > h3 {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
 .content ol, .content ul {
     font-size: inherit;
     padding-top: 10px;
