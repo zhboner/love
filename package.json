@@ -14,14 +14,19 @@
     "redux": "^3.7.2"
   },
   "scripts": {
+    "build-rename": "npm run build-rename-js && npm run build-rename-css",
+    "build-rename-js": "renamer --regex --find 'main\\.[^\\.]+\\.js' --replace 'main.js' build/static/js/*.js",
+    "build-rename-css": "renamer --regex --find 'main\\.[^\\.]+\\.css' --replace 'main.css' build/static/css/*.css",
+
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build && npm run build-rename",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.4.0",
     "react-app-rewired": "^1.2.9",
-    "react-router": "^4.2.0"
+    "react-router": "^4.2.0",
+    "renamer": "^0.6.1"
   }
 }
