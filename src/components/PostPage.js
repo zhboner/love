@@ -50,8 +50,8 @@ class PostPage extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-        post: state.postList,
-        catDic: state.categories
+        post: state.post.postList,
+        catDic: state.category.categories
     }
 };
 

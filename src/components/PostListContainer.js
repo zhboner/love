@@ -99,10 +99,10 @@ class PostListContainer extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-        pageNO: state.pageNO,
-        numberOfPosts: state.postAmount,
-        posts: state.postList,
-        categories: state.categories
+        pageNO: state.post.pageNO,
+        numberOfPosts: state.post.postAmount,
+        posts: state.post.postList,
+        categories: state.category.categories
     }
 };
 

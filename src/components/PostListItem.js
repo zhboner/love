@@ -43,7 +43,7 @@ class PostListItem extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.categories
+        categories: state.category.categories
     }
 };
 
