@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import config from './config';
+
 export const getSettings = ()=>{
-    return axios.get('https://www.zgoing.com/wp-json');
+    return axios.get(config.home + '/wp-json');
 };
