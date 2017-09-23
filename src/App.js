@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-import { getSettings } from './services/Information';
+import { getSettings } from './services/information';
 import './App.css';
 import Main from './components/Main';
 

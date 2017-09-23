@@ -1,10 +1,14 @@
-// const url = 'https://www.zgoing.com/';
+// For dev
+let url;
+if (window.RT_API) {
+    url = window.RT_API.root
+} else {
+    url = 'http://localhost';
+}
 
-const url = window.RT_API.root;
 const config = {
     home: url,
     prefix: url + '/wp-json/wp/v2/'
 };
 
-console.log(config);
 export default config;

@@ -30,10 +30,8 @@ class PostListContainer extends Component {
             }
 
             getPosts().then((response)=>{
-                console.log(response);
                 const numberOfPosts = parseInt(response.headers['x-wp-total'], 10);
                 this.extractExcerpt(response.data);
-                console.log(response.data);
 
                 this.props.persistPosts(response.data);
                 this.props.persistTheAmountOfPosts(numberOfPosts);
