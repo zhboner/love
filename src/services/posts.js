@@ -49,9 +49,9 @@ export const extractExcerpt = (text) => {
         excerpt: excerpt,
         content: content
     }
-}
+};
 
 const fetchPostBySlug = (slug) => {
-    return axios.get(prefix + 'posts?filter[name]=' + slug);
+    return axios.get(prefix + 'posts?slug=' + slug);
 };
 

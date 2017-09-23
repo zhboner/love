@@ -13,6 +13,7 @@ class PostPage extends Component {
     }
 
     componentWillMount() {
+
         // Find the post
         const slug = this.props.match.params.slug;
         findPostBySlug(slug, this.props.post).then(
@@ -41,6 +42,8 @@ class PostPage extends Component {
                 <h3>{this.state.post.title.rendered}</h3>
                 <p className='subtitle'>
                     {date}
+                    <br/>
+
                 </p>
                 <div dangerouslySetInnerHTML={content}/>
             </div>
