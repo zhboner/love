@@ -3,7 +3,7 @@ let url;
 if (window.RT_API) {
     url = window.RT_API.root
 } else {
-    url = 'http://localhost';
+    url = 'https://www.zgoing.com';
 }
 
 const config = {

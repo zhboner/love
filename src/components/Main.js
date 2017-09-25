@@ -9,31 +9,19 @@ import Footer from './Footer';
 import PostListContainer from './PostListContainer';
 import PostPage from './PostPage';
 
-import { getCategoriesList } from '../services/categories';
-import { saveCategories } from '../actions'
+import { fetchCategories } from '../actions/fetchCategories'
 
 
 class Main extends Component {
     constructor(props){
         super(props);
-
-        this.loadCategories = this.loadCategories.bind(this);
     }
 
-    componentWillMount() {
-        this.loadCategories();
+    componentDidMount() {
+        this.props.getCategories();
     }
 
-    loadCategories() {
-        getCategoriesList().then((response)=>{
-            let dict = {};
-            response.data.map((cat) => {
-                dict[cat.id] = cat.name;
-            });
 
-            this.props.persistCategories(dict);
-        })
-    }
 
     render() {
         return (
@@ -65,8 +53,8 @@ class Main extends Component {
 
 const mapDispatchToProps = (dispatch)=>{
     return {
-        persistCategories: (categories) => {
-            dispatch(saveCategories(categories))
+        getCategories: () => {
+            dispatch(fetchCategories())
         }
     };
 };

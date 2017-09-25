@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { findPostBySlug } from '../services/posts';
+import { fetchSinglePost } from '../actions/fetchPost'
 import './PostPage.css';
 
 class PostPage extends Component {
@@ -12,34 +12,24 @@ class PostPage extends Component {
         }
     }
 
-    componentWillMount() {
-
-        // Find the post
-        const slug = this.props.match.params.slug;
-        findPostBySlug(slug, this.props.post).then(
-            (result) => {
-                this.setState({
-                    post: result
-                })
-            }), (e) => {
-            console.log(e)
-        }
+    componentDidMount() {
+        this.props.getPost(this.props.match.params.slug);
     }
 
     render() {
-        if (!this.state.post) {
+        if (!this.props.post) {
             return (
                 <div>loading...</div>
             )
         }
 
-        let date = this.state.post.date.split('T')[0];
+        let date = this.props.post.date.split('T')[0];
 
-        let content = {__html: this.state.post.content.rendered};
+        let content = {__html: this.props.post.content.rendered};
 
         return (
             <div className="content">
-                <h3>{this.state.post.title.rendered}</h3>
+                <h3>{this.props.post.title.rendered}</h3>
                 <p className='subtitle'>
                     {date}
                     <br/>
@@ -53,9 +43,17 @@ class PostPage extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-        post: state.post.postList,
-        catDic: state.category.categories
+        post: state.post.content,
+        categories: state.category.categories
     }
 };
 
-export default connect(mapStateToProps)(PostPage);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getPost: (slug) => {
+            return dispatch(fetchSinglePost(slug))
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostPage);

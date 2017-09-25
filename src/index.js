@@ -4,10 +4,20 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
-const store = createStore(reducer);
+import thunkMiddleware from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+
+const loggerMiddleware = createLogger();
+const store = createStore(
+    reducer,
+    applyMiddleware(
+        thunkMiddleware,
+        loggerMiddleware
+    )
+);
 
 
 ReactDOM.render(

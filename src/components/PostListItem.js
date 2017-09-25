@@ -7,9 +7,7 @@ import './PostListItem.css';
 class PostListItem extends Component {
     constructor(props) {
         super(props);
-    }
 
-    componentWillMount() {
         this.date = this.props.single.date.split('T')[0];
     }
 
