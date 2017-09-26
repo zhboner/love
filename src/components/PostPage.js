@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchSinglePost } from '../actions/fetchPost'
+import { fetchSinglePost, clearCurrentPost } from '../actions/fetchPost'
 import './PostPage.css';
 import CommentList from './CommentList';
 
@@ -17,6 +17,10 @@ class PostPage extends Component {
         this.props.getPost(this.props.match.params.slug);
     }
 
+    componentWillUnmount() {
+        this.props.clearPost();
+    }
+
     render() {
         if (!this.props.post) {
             return (
@@ -28,7 +32,6 @@ class PostPage extends Component {
 
         let content = {__html: this.props.post.content.rendered};
 
-        console.log(this.props.post);
         return (
             <div className="content">
                 <h3>{this.props.post.title.rendered}</h3>
@@ -55,6 +58,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getPost: (slug) => {
             return dispatch(fetchSinglePost(slug))
+        },
+        clearPost: () => {
+            return dispatch(clearCurrentPost());
         }
     }
 };
