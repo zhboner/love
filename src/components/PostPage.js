@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchSinglePost } from '../actions/fetchPost'
 import './PostPage.css';
+import CommentList from './CommentList';
 
 class PostPage extends Component {
     constructor(props) {
@@ -36,6 +37,7 @@ class PostPage extends Component {
 
                 </p>
                 <div dangerouslySetInnerHTML={content}/>
+                <CommentList postID={this.props.post.id}/>
             </div>
         )
     }

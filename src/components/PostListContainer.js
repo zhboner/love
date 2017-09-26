@@ -23,12 +23,20 @@ class PostListContainer extends Component {
     }
 
     render() {
+        const posts = this.props.posts;
         return (
             <div className='post_list_container'>
-                {this.props.posts.map((single)=>{
-                    return (
-                        <PostListItem single={single} key={single.id}/>
-                    )
+                {posts.map((single, idx)=>{
+                    if (posts[idx + 1]) {
+                        return (
+                            <div key={single.id}>
+                                <PostListItem single={single}/>
+                                <hr />
+                            </div>
+                        )
+                    } else {
+                        return (<PostListItem single={single} key={single.id}/>)
+                    }
                 })}
                 <Row justify='center' type='flex'>
                     <Pagination className='pagination' onChange={this.handlePageChange} total={this.props.numberOfPosts} pageSize={10}/>

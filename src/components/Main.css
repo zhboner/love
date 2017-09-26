@@ -2,3 +2,9 @@
     border-bottom: 1px solid rgba(157,157,157,0.65);
     margin-bottom: 10px;
 }
+
+.footer {
+    margin-top: 40px;
+    text-align: center;
+    background-color: rgba(233,233,233,0.2);
+}
