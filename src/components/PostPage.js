@@ -28,6 +28,7 @@ class PostPage extends Component {
 
         let content = {__html: this.props.post.content.rendered};
 
+        console.log(this.props.post);
         return (
             <div className="content">
                 <h3>{this.props.post.title.rendered}</h3>
