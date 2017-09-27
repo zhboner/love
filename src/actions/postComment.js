@@ -23,7 +23,7 @@ const postingCommentFail = () => {
     }
 };
 
-export const postComment = (comment, postID, parentID = 0) => {
+export const postComment = (comment, postID, parentID = 0, callback) => {
     return (dispatch) => {
         const url = config.prefix + 'comments';
         const postComment = {
@@ -34,15 +34,17 @@ export const postComment = (comment, postID, parentID = 0) => {
             content: comment.content
         };
 
-        console.log(postComment);
+        console.log(postComment, url);
         dispatch(postingComment());
         axios.post(url, postComment)
             .then(response => {
                 console.log(response);
-                dispatch(postingCommentSuccess())
+                dispatch(postingCommentSuccess());
+                console.log(callback);
             })
             .catch(e => {
-                dispatch(postingCommentFail())
+                console.log(e);
+                dispatch(postingCommentFail());
             })
     }
 };

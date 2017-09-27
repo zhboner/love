@@ -24,7 +24,6 @@ class CommentList extends Component {
             commentsObj[comment.id] = comment;
         });
 
-        console.log(commentsObj);
         return (
             <Spin spinning={loading} size='large'>
                 {(() => {
