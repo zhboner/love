@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from '../config';
+import { fetchCommentList } from './fetchCommentList';
 
 export const POSTING_THE_COMMENT = 'POSTING_THE_COMMENT';
 export const POSTING_THE_COMMENT_SUCCESS = 'POSTING_THE_COMMENT_SUCCESS';
@@ -38,9 +39,8 @@ export const postComment = (comment, postID, parentID = 0, callback) => {
         dispatch(postingComment());
         axios.post(url, postComment)
             .then(response => {
-                console.log(response);
                 dispatch(postingCommentSuccess());
-                console.log(callback);
+                dispatch(fetchCommentList(postID));
             })
             .catch(e => {
                 console.log(e);

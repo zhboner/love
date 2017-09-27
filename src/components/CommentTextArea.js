@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Input } from 'antd';
+import { Form, Button, Input, message } from 'antd';
 
 
 import { postComment } from '../actions/postComment';
@@ -15,6 +15,19 @@ class CommentTextArea extends Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentWillUpdate(nextProps) {
+        const { success, fail, isPosting} = nextProps;
+        if (!success && !fail && !isPosting)
+            return;
+
+        if (fail) {
+            message.error('评论失败');
+        }
+        if (success) {
+            message.success('评论成功');
+        }
     }
 
     handleSubmit(e) {
@@ -73,16 +86,15 @@ const mapDispatchToProps = (dispatch) => {
         postComment: (comment, postID, parentID) => {
             return dispatch(postComment(comment, postID, parentID));
         },
-        getComments: (postID) => {
-            dispatch(fetchCommentList(postID));
-        }
     }
 };
 
 const mapStateToProps = (state) => {
     return {
         postID: state.post.content.id,
-        isPosting: state.comment.isPosting
+        isPosting: state.comment.isPosting,
+        success: state.comment.success,
+        fail: state.comment.fail
     }
 };
 
