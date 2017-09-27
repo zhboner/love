@@ -4,6 +4,8 @@ import { Spin } from 'antd';
 
 import { fetchCommentList } from '../actions/fetchCommentList';
 
+import CommentItem from './CommentItem';
+
 class CommentList extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +18,13 @@ class CommentList extends Component {
     render() {
         const loading = this.props.loading,
             comments = this.props.comments;
+
+        let commentsObj = {0:null};
+        comments.map((comment)=> {
+            commentsObj[comment.id] = comment;
+        });
+
+        console.log(commentsObj);
         return (
             <Spin spinning={loading} size='large'>
                 {(() => {
@@ -34,14 +43,9 @@ class CommentList extends Component {
                             date = comment.date.split('T');
                         const day = date[0],
                             time = date[1];
-                        return (<div key={comment.id}>
-                            <p>
-                                <strong>{authorName}</strong>
-                                <br/>
-                                {day} {time}
-                            </p>
-                            <div dangerouslySetInnerHTML={dangerObj}/>
-                        </div>)
+                        return (
+                            <CommentItem item={comment} parent={commentsObj[comment.parent]} key={comment.id}/>
+                        )
                     })
 
                 })()}

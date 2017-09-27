@@ -1,0 +1,29 @@
+.comment_single {
+    width: 100%;
+    box-shadow: 3px -3px 29px -2px rgba(191,191,191,0.63);
+    padding: 15px 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.comment_single p {
+    font-size: 14px;
+    line-height: 180%;
+}
+
+.comment_single .avatar {
+    width: 12%;
+    max-width: 70px;
+    min-width: 57px;
+    display: inline-block;
+}
+
+.comment_single .info {
+    width: 88%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.comment_single .top {
+    padding-bottom: 15px;
+}

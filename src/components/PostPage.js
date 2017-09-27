@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchSinglePost, clearCurrentPost } from '../actions/fetchPost'
 import './PostPage.css';
 import CommentList from './CommentList';
+import CommentTextArea from './CommentTextArea';
 
 class PostPage extends Component {
     constructor(props) {
@@ -33,14 +34,17 @@ class PostPage extends Component {
         let content = {__html: this.props.post.content.rendered};
 
         return (
-            <div className="content">
-                <h3>{this.props.post.title.rendered}</h3>
-                <p className='subtitle'>
-                    {date}
-                    <br/>
+            <div>
+                <div className="content">
+                    <h3>{this.props.post.title.rendered}</h3>
+                    <p className='subtitle'>
+                        {date}
+                        <br/>
 
-                </p>
-                <div dangerouslySetInnerHTML={content}/>
+                    </p>
+                    <div dangerouslySetInnerHTML={content}/>
+                </div>
+                <CommentTextArea postID={this.props.post.id}/>
                 <CommentList postID={this.props.post.id}/>
             </div>
         )

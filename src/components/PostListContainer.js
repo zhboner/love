@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Row, Pagination  } from 'antd';
 
-import PostListItem from './PostListItem';
+import PostList from './PostList';
 import { saveTheAmountOfPosts } from '../actions/fetchPost'
 import { fetchPostsList } from '../actions/fetchPostsList'
 import './PostListContainer.css'
@@ -26,18 +26,7 @@ class PostListContainer extends Component {
         const posts = this.props.posts;
         return (
             <div className='post_list_container'>
-                {posts.map((single, idx)=>{
-                    if (posts[idx + 1]) {
-                        return (
-                            <div key={single.id}>
-                                <PostListItem single={single}/>
-                                <hr />
-                            </div>
-                        )
-                    } else {
-                        return (<PostListItem single={single} key={single.id}/>)
-                    }
-                })}
+                <PostList posts={posts}/>
                 <Row justify='center' type='flex'>
                     <Pagination className='pagination' onChange={this.handlePageChange} total={this.props.numberOfPosts} pageSize={10}/>
                 </Row>

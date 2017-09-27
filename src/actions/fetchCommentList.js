@@ -29,7 +29,7 @@ const getCommentsListFromCache = (commentsList, postID) => {
 };
 
 export const fetchCommentList = (postID) => {
-    let url = config.prefix + 'comments?post=' + postID;
+    let url = config.prefix + 'comments?order=asc&post=' + postID;
     return (dispatch, getState) => {
         if (getState().comment[postID] && getState().comment[postID].content) {
             dispatch(getCommentsListFromCache(getState().comment[postID].content, postID));
