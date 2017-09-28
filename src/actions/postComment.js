@@ -30,6 +30,7 @@ export const postComment = (comment, postID, parentID = 0, callback) => {
         const postComment = {
             author_name: comment.author_name || '',
             author_email: comment.author_email || '',
+            author_url: comment.author_url || '',
             parent: parentID,
             post: postID,
             content: comment.content

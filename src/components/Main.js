@@ -28,12 +28,12 @@ class Main extends Component {
             <Router>
                 <div>
                     <Row className='header'>
-                        <Col span={12} offset={6}>
+                        <Col md={{span: 12, offset: 6}} sm={{span: 18, offset: 3}} xs={{span: 20, offset: 2}}>
                             <Header info={this.props.info}/>
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={12} offset={6}>
+                        <Col md={{span: 12, offset: 6}} sm={{span: 18, offset: 3}} xs={{span: 20, offset: 2}}>
                             <Switch>
                                 <Route exact path='/' component={PostListContainer}/>
                                 <Route path='/posts/:slug' component={PostPage}/>
@@ -41,7 +41,7 @@ class Main extends Component {
                         </Col>
                     </Row>
                     <Row className='footer'>
-                        <Col span={12} offset={6}>
+                        <Col md={{span: 12, offset: 6}} sm={{span: 18, offset: 3}} xs={{span: 20, offset: 2}}>
                             <Footer/>
                         </Col>
                     </Row>

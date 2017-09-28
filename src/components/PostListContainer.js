@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Row, Pagination  } from 'antd';
+import { Row, Pagination, Spin  } from 'antd';
 
 import PostList from './PostList';
 import { saveTheAmountOfPosts } from '../actions/fetchPost'
@@ -25,12 +25,12 @@ class PostListContainer extends Component {
     render() {
         const posts = this.props.posts;
         return (
-            <div className='post_list_container'>
+            <Spin className='post_list_container' spinning={this.props.numberOfPosts === 0 || this.props.posts === []}>
                 <PostList posts={posts}/>
                 <Row justify='center' type='flex'>
                     <Pagination className='pagination' onChange={this.handlePageChange} total={this.props.numberOfPosts} pageSize={10}/>
                 </Row>
-            </div>
+            </Spin>
         )
     }
 }

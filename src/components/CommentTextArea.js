@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Input, message } from 'antd';
+import { Form, Button, Input, message, Icon, Row, Col } from 'antd';
 
 
 import { postComment } from '../actions/postComment';
-import { fetchCommentList } from '../actions/fetchCommentList';
-
+import './CommentTextArea.css';
 
 class CommentTextArea extends Component {
     constructor(props) {
@@ -38,7 +37,8 @@ class CommentTextArea extends Component {
             this.props.postComment({
                 content: comment.comment,
                 author_name: comment.author,
-                author_email: comment.email
+                author_email: comment.email,
+                author_url: comment.url
             }, this.props.postID,
                 this.props.parentID || 0
             );
@@ -50,7 +50,7 @@ class CommentTextArea extends Component {
         const FormItem = Form.Item;
         const { getFieldDecorator } = this.props.form;
         return (
-            <Form layout='vertical'>
+            <Form layout='vertical' className='CommentTextArea'>
 
                 <FormItem>
                     {getFieldDecorator('comment', {
@@ -59,22 +59,37 @@ class CommentTextArea extends Component {
                             <TextArea placeholder='评论' rows={4}/>
                         )}
                 </FormItem>
+                <Row>
+                    <Col md={6} xs={24}>
+                        <FormItem>
+                            {getFieldDecorator('author', {
+                                rules: [{type: 'string', message: '请输入昵称'}]
+                            })(
+                                <Input placeholder='昵称' addonBefore={<Icon type='user'/>}/>
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col md={{span: 6, offset: 3}} xs={24}>
+                        <FormItem>
+                            {getFieldDecorator('email', {
+                                rules: [{type: 'email', message: '请输入有效的email'}]
+                            })(
+                                <Input placeholder='Email' addonBefore={<Icon type='mail'/>}/>
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col md={{span: 6, offset: 3}} xs={24}>
+                        <FormItem>
+                            {getFieldDecorator('url', {
+                                rules: [{type: 'url', message: '请输入有效的url'}]
+                            })(
+                                <Input placeholder='Website' addonBefore={<Icon type='home'/>}/>
+                            )}
+                        </FormItem>
+                    </Col>
+                </Row>
                 <FormItem>
-                    {getFieldDecorator('author', {
-                        rules: [{type: 'string', message: '请输入昵称'}]
-                    })(
-                        <Input placeholder='昵称'/>
-                    )}
-                </FormItem>
-                <FormItem>
-                    {getFieldDecorator('email', {
-                        rules: [{type: 'email', message: '请输入有效的email'}]
-                    })(
-                        <Input placeholder='Email'/>
-                    )}
-                </FormItem>
-                <FormItem>
-                    <Button type='submit' onClick={this.handleSubmit} loading={this.props.isPosting}>发布</Button>
+                    <Button type='default' onClick={this.handleSubmit} loading={this.props.isPosting}>发布</Button>
                 </FormItem>
             </Form>
         )

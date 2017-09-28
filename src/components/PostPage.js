@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Spin } from 'antd';
 
 import { fetchSinglePost, clearCurrentPost } from '../actions/fetchPost'
 import './PostPage.css';
@@ -25,7 +26,7 @@ class PostPage extends Component {
     render() {
         if (!this.props.post) {
             return (
-                <div>loading...</div>
+                <Spin spinning={!this.props.post} tip='loading'/>
             )
         }
 

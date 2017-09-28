@@ -1,34 +1,21 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-
-import { getSettings } from './services/information';
+import { fetchInformation } from './actions/info'
 import './App.css';
 import Main from './components/Main';
 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            info: null,
-            postList: 123
-        }
-    }
-
-    componentWillMount() {
-        getSettings().then((response)=>{
-            console.log(response);
-            this.setState({
-                info: response.data
-            })
-        })
+    componentDidMount() {
+        this.props.fetchInfo();
     }
 
     render() {
         let app = '';
-        if (this.state.info && this.state.postList) {
+        if (!this.props.isFetching && this.props.info) {
             app = (
-                <Main info={this.state.info}/>
+                <Main info={this.props.info}/>
             )
         } else {
             app = (
@@ -40,4 +27,19 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        info: state.info.content,
+        isFetching: state.info.isFetching
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchInfo: () => {
+            return dispatch(fetchInformation())
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
