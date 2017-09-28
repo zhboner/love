@@ -5,5 +5,6 @@ import category from './category';
 import info from './info';
 import postList from './postList';
 import comment from './comment'
+import page from './page';
 
-export default combineReducers({post, category, info, postList, comment});
+export default combineReducers({post, category, info, postList, comment, page});
