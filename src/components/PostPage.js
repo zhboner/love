@@ -3,18 +3,9 @@ import { connect } from 'react-redux';
 import { Spin } from 'antd';
 
 import { fetchSinglePost, clearCurrentPost } from '../actions/fetchPost'
-import './PostPage.css';
-import CommentList from './CommentList';
-import CommentTextArea from './CommentTextArea';
+import Single from './Single'
 
 class PostPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            post: null
-        }
-    }
-
     componentDidMount() {
         this.props.getPost(this.props.match.params.slug);
     }
@@ -30,24 +21,8 @@ class PostPage extends Component {
             )
         }
 
-        let date = this.props.post.date.split('T')[0];
-
-        let content = {__html: this.props.post.content.rendered};
-
         return (
-            <div>
-                <div className="content">
-                    <h3>{this.props.post.title.rendered}</h3>
-                    <p className='subtitle'>
-                        {date}
-                        <br/>
-
-                    </p>
-                    <div dangerouslySetInnerHTML={content}/>
-                </div>
-                <CommentTextArea postID={this.props.post.id}/>
-                <CommentList postID={this.props.post.id}/>
-            </div>
+            <Single single={this.props.post}/>
         )
     }
 }
