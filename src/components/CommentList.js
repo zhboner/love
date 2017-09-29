@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Spin } from 'antd';
+import { Spin, Pagination, Row } from 'antd';
 
 import { fetchCommentList } from '../actions/fetchCommentList';
 
@@ -9,21 +9,31 @@ import CommentItem from './CommentItem';
 class CommentList extends Component {
     constructor(props) {
         super(props);
+        this.loadComment = this.loadComment.bind(this);
+
+        this.state = {
+            page: 1
+        }
     }
 
     componentDidMount() {
         this.props.getComments(this.props.postID);
     }
 
+    loadComment(page) {
+        this.setState({page: page});
+        this.props.getComments(this.props.postID, page)
+    }
+
     render() {
         const loading = this.props.loading,
-            comments = this.props.comments;
+            comments = this.props.comments,
+            amount = this.props.amount;
 
         let commentsObj = {0:null};
         comments.map((comment)=> {
             commentsObj[comment.id] = comment;
         });
-
         return (
             <Spin spinning={loading} size='large'>
                 {(() => {
@@ -36,6 +46,7 @@ class CommentList extends Component {
                             </div>
                         )
                     }
+
                     return comments.map((comment) => {
                         let dangerObj = {__html: comment.content.rendered},
                             authorName = comment.author_name || '匿名',
@@ -45,8 +56,16 @@ class CommentList extends Component {
                         return (
                             <CommentItem item={comment} parent={commentsObj[comment.parent]} key={comment.id}/>
                         )
-                    })
-
+                    });
+                })()}
+                {(()=> {
+                    if (amount > 10) {
+                        return (
+                            <Row type='flex' justify='center'>
+                                <Pagination simple defaultCurrent={this.state.page} total={amount} onChange={this.loadComment}/>
+                            </Row>
+                        )
+                    }
                 })()}
             </Spin>
         );
@@ -55,8 +74,8 @@ class CommentList extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getComments: (postID) => {
-            dispatch(fetchCommentList(postID));
+        getComments: (postID, page) => {
+            dispatch(fetchCommentList(postID, page));
         }
     }
 };
@@ -64,13 +83,17 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
     let obj = {
         comments: [],
-        loading: false
+        loading: false,
+        amount: 0
     };
     if (state.comment[ownProps.postID] && state.comment[ownProps.postID].content) {
         obj.comments = state.comment[ownProps.postID].content
     }
     if (state.comment[ownProps.postID] && state.comment[ownProps.postID].isFetching) {
         obj.loading = state.comment[ownProps.postID].isFetching
+    }
+    if (state.comment[ownProps.postID] && state.comment[ownProps.postID].CommentsAmount) {
+        obj.amount = state.comment[ownProps.postID].CommentsAmount
     }
 
     return obj;

@@ -8,6 +8,7 @@ import Header from './Header';
 import Footer from './Footer';
 import PostListContainer from './PostListContainer';
 import PostPage from './PostPage';
+import PagePage from './PagePage';
 
 import { fetchCategories } from '../actions/fetchCategories'
 
@@ -37,6 +38,7 @@ class Main extends Component {
                             <Switch>
                                 <Route exact path='/' component={PostListContainer}/>
                                 <Route path='/posts/:slug' component={PostPage}/>
+                                <Route path='/:slug' component={PagePage}/>
                             </Switch>
                         </Col>
                     </Row>

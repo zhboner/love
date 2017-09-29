@@ -106,7 +106,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        postID: state.post.content.id,
         isPosting: state.comment.isPosting,
         success: state.comment.success,
         fail: state.comment.fail

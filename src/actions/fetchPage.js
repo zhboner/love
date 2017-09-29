@@ -31,7 +31,8 @@ export const fetchPage = (slug) => {
         dispatch(requestPage());
         axios.get(url)
             .then(response => {
-                dispatch(receivePage(response.data))
+                console.log(response);
+                dispatch(receivePage(response.data[0]))
             })
             .catch(e => {
                 dispatch(failGetPage());

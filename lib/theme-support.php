@@ -42,8 +42,7 @@ if ( ! class_exists( 'Theme_Support' ) ) :
 
 		private function menus() {
 			register_nav_menus( array(
-				'main_menu'   => 'Main Menu',
-				'footer_menu' => 'Footer Menu',
+				'main_menu'   => 'Main Menu'
 			) );
 		}
 

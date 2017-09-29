@@ -3,7 +3,6 @@ import config from '../config';
 
 export const REQUEST_COMMENTS_LIST = 'REQUEST_COMMENTS_LIST';
 export const RECEIVE_COMMENTS_LIST = 'RECEIVE_COMMENTS_LIST';
-export const GET_COMMENT_LIST_FROM_CACHE = 'GET_COMMENT_LIST_FROM_CACHE';
 
 const requestCommentsList = (postID) => {
     return {
@@ -12,34 +11,24 @@ const requestCommentsList = (postID) => {
     }
 };
 
-const receiveCommentsList = (commentsList, postID) => {
+const receiveCommentsList = (commentsList, postID, CommentsAmount) => {
     return {
         type: RECEIVE_COMMENTS_LIST,
         data: commentsList,
-        postID: postID
+        postID: postID,
+        CommentsAmount: CommentsAmount
     }
 };
 
-const getCommentsListFromCache = (commentsList, postID) => {
-    return {
-        type: RECEIVE_COMMENTS_LIST,
-        data: commentsList,
-        postID: postID
-    }
-};
 
-export const fetchCommentList = (postID) => {
-    let url = config.prefix + 'comments?order=asc&post=' + postID;
+export const fetchCommentList = (postID, page = 1) => {
+    let url = config.prefix + 'comments?order=asc&post=' + postID + '&page=' + page;
     return (dispatch, getState) => {
-        if (getState().comment[postID] && getState().comment[postID].content) {
-            dispatch(getCommentsListFromCache(getState().comment[postID].content, postID));
-            return;
-        }
-
         dispatch(requestCommentsList(postID));
         axios.get(url)
             .then((response) => {
-                dispatch(receiveCommentsList(response.data, postID));
+                console.log(response);
+                dispatch(receiveCommentsList(response.data, postID, parseInt(response.headers['x-wp-total'], 10)));
             })
     }
 };
