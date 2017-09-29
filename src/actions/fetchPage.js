@@ -31,7 +31,6 @@ export const fetchPage = (slug) => {
         dispatch(requestPage());
         axios.get(url)
             .then(response => {
-                console.log(response);
                 dispatch(receivePage(response.data[0]))
             })
             .catch(e => {

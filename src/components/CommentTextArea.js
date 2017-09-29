@@ -60,7 +60,7 @@ class CommentTextArea extends Component {
                         )}
                 </FormItem>
                 <Row>
-                    <Col md={6} xs={24}>
+                    <Col md={6} sm={6} xs={24}>
                         <FormItem>
                             {getFieldDecorator('author', {
                                 rules: [{type: 'string', message: '请输入昵称'}]
@@ -69,7 +69,7 @@ class CommentTextArea extends Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col md={{span: 6, offset: 3}} xs={24}>
+                    <Col md={{span: 6, offset: 3}} sm={{span: 6, offset: 3}} xs={24}>
                         <FormItem>
                             {getFieldDecorator('email', {
                                 rules: [{type: 'email', message: '请输入有效的email'}]
@@ -78,7 +78,7 @@ class CommentTextArea extends Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col md={{span: 6, offset: 3}} xs={24}>
+                    <Col md={{span: 6, offset: 3}} sm={{span: 6, offset: 3}} xs={24}>
                         <FormItem>
                             {getFieldDecorator('url', {
                                 rules: [{type: 'url', message: '请输入有效的url'}]

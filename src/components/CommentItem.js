@@ -37,7 +37,7 @@ class CommentItem extends Component {
 
         let textArea = (<CommentTextArea parentID={comment.id}/>),
             replyButton = (
-                <Button type='ghost' size='small' htmlType='button' onClick={this.handleReplyButtonClick} icon='enter'>
+                <Button className='reply_button' type='ghost' size='small' htmlType='button' onClick={this.handleReplyButtonClick} icon='enter'>
                     {this.state.showingCommentTextArea ? 'Cancel' : 'Reply'}
                 </Button>
             );
@@ -55,10 +55,10 @@ class CommentItem extends Component {
                             {day} {time}
                         </p>
                     </div>
-                    {replyButton}
                 </div>
                 {reply}
-                <div dangerouslySetInnerHTML={dangerObj}/>
+                <div className='comment_content' dangerouslySetInnerHTML={dangerObj}/>
+                {replyButton}
                 {this.state.showingCommentTextArea ? textArea: ''}
             </div>
         )

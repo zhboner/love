@@ -6,6 +6,10 @@ import CommentList from './CommentList';
 import CommentTextArea from './CommentTextArea';
 
 export default class PostPage extends Component {
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
+
     render() {
         if (!this.props.single) {
             return (

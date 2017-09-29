@@ -27,3 +27,22 @@
 .comment_single .top {
     padding-bottom: 15px;
 }
+
+.comment_single .comment_content {
+    display: inline-block;
+    width: 83%;
+    margin-right: 3%
+}
+
+.comment_single .comment_content > * {
+    width: 100%;
+    display: block;
+    word-break: break-all;
+}
+
+.comment_single .reply_button {
+    display: inline-block;
+    vertical-align: text-bottom;
+    text-align: right;
+    margin-top: 3%;
+}

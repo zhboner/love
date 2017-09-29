@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import { Row, Col} from 'antd';
+
+import PrimaryMenu from './PrimaryMenu';
 import './Header.css';
 
 
@@ -15,10 +18,15 @@ export default class Header extends Component {
 
     render() {
         return (
-            <div className="title">
-                <Link to='/'><h1>{this.info.name}</h1></Link>
-                <h2>{this.info.description}</h2>
-            </div>
+            <Row className="title" type='flex' justify='space-between' align="bottom">
+                <Col>
+                    <Link to='/'><h1>{this.info.name}</h1></Link>
+                    <h2>{this.info.description}</h2>
+                </Col>
+                <Col>
+                    <PrimaryMenu/>
+                </Col>
+            </Row>
         )
     }
 }

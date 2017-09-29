@@ -13,7 +13,6 @@ class PostListContainer extends Component {
         this.handlePageChange = this.handlePageChange.bind(this);
     }
 
-
     handlePageChange(page) {
         this.props.getPostsList(page);
     }
@@ -25,10 +24,15 @@ class PostListContainer extends Component {
     render() {
         const posts = this.props.posts;
         return (
-            <Spin className='post_list_container' spinning={this.props.numberOfPosts === 0 || this.props.posts === []}>
+            <Spin className='post_list_container' spinning={this.props.isFetching}>
                 <PostList posts={posts}/>
                 <Row justify='center' type='flex'>
-                    <Pagination className='pagination' onChange={this.handlePageChange} total={this.props.numberOfPosts} pageSize={10}/>
+                    <Pagination className='pagination'
+                                defaultCurrent={1}
+                                onChange={this.handlePageChange}
+                                total={this.props.numberOfPosts === 0 ? 20: this.props.numberOfPosts}
+                                pageSize={10}
+                    />
                 </Row>
             </Spin>
         )
@@ -39,6 +43,7 @@ const mapStateToProps = (state)=>{
     return {
         numberOfPosts: state.info.postAmount,
         posts: state.postList.content,
+        isFetching: state.postList.isFetching
     }
 };
 

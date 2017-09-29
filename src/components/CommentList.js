@@ -5,6 +5,7 @@ import { Spin, Pagination, Row } from 'antd';
 import { fetchCommentList } from '../actions/fetchCommentList';
 
 import CommentItem from './CommentItem';
+import './CommentList.css';
 
 class CommentList extends Component {
     constructor(props) {
@@ -35,7 +36,8 @@ class CommentList extends Component {
             commentsObj[comment.id] = comment;
         });
         return (
-            <Spin spinning={loading} size='large'>
+            <div className='comment_list'>
+                <Spin spinning={loading} size='large'>
                 {(() => {
                     if (loading) {
                         return <div height='200'></div>
@@ -61,13 +63,14 @@ class CommentList extends Component {
                 {(()=> {
                     if (amount > 10) {
                         return (
-                            <Row type='flex' justify='center'>
+                            <Row className='pagination' type='flex' justify='center'>
                                 <Pagination simple defaultCurrent={this.state.page} total={amount} onChange={this.loadComment}/>
                             </Row>
                         )
                     }
                 })()}
             </Spin>
+            </div>
         );
     }
 }

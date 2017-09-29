@@ -22,7 +22,9 @@ class PostPage extends Component {
         }
 
         return (
-            <Single single={this.props.post}/>
+            <div>
+                <Single single={this.props.post}/>
+            </div>
         )
     }
 }
