@@ -14,6 +14,13 @@ class PagePage extends Component {
         this.props.clearPage();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.match.params.slug !== nextProps.match.params.slug) {
+            this.props.clearPage();
+        }
+        this.props.getPage(this.props.match.params.slug);
+    }
+
     render() {
         if (!this.props.page) {
             return (
