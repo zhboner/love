@@ -21,6 +21,13 @@ class CommentList extends Component {
         this.props.getComments(this.props.postID);
     }
 
+
+    componentWillUpdate(nextProps) {
+        if (this.props.postID !== nextProps.postID) {
+            this.props.getComments(nextProps.postID);
+        }
+    }
+
     loadComment(page) {
         this.setState({page: page});
         this.props.getComments(this.props.postID, page)

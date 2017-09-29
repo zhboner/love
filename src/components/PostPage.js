@@ -14,6 +14,12 @@ class PostPage extends Component {
         this.props.clearPost();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.match.params.slug !== nextProps.match.params.slug) {
+            this.props.getPost(nextProps.match.params.slug);
+        }
+    }
+
     render() {
         if (!this.props.post) {
             return (

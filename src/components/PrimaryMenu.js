@@ -27,8 +27,8 @@ class PrimaryMenu extends Component {
         return (
             <div className='primary_menu'>
                 <ul>
-                    <Link to='/about-myself'><li>ABOUT</li></Link>
-                    <Link to='/guestbook'><li>Message Board</li></Link>
+                    <li><Link to='/about-myself'>ABOUT</Link></li>
+                    <li><Link to='/guestbook'>留言板</Link></li>
                 </ul>
             </div>
         )

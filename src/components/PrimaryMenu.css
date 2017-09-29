@@ -1,12 +1,16 @@
 .primary_menu ul {
     margin: 0;
     padding: 0;
+    padding-top: 30px;
     list-style-type: none;
 }
 
 .primary_menu ul li {
     display: inline;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 30px;
     font-weight: bold;
+}
+
+.primary_menu ul li:last-child {
+    padding-right: 0;
 }
