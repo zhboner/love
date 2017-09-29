@@ -16,9 +16,9 @@ class PagePage extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.match.params.slug !== nextProps.match.params.slug) {
-            this.props.clearPage();
+            // this.props.clearPage();
+            this.props.getPage(nextProps.match.params.slug);
         }
-        this.props.getPage(this.props.match.params.slug);
     }
 
     render() {
@@ -29,14 +29,17 @@ class PagePage extends Component {
         }
 
         return (
-            <Single single={this.props.page}/>
+            <Spin spinning={this.props.isFetching}>
+                <Single single={this.props.page}/>
+            </Spin>
         )
     }
 }
 
 const mapStateToProps = (state)=>{
     return {
-        page: state.page.content
+        page: state.page.content,
+        isFetching: state.page.isFetching
     }
 };
 

@@ -1,7 +1,7 @@
 import { RECEIVE_PAGE, REQUIRE_PAGE, FETCH_PAGE_FAIL, CLEAR_PAGE } from '../actions/fetchPage';
 
 const page = (state = {
-    ifFetching: false,
+    isFetching: false,
     content: null,
     failed: false
 }, action) => {
@@ -13,7 +13,7 @@ const page = (state = {
         case FETCH_PAGE_FAIL:
             return Object.assign({}, state, {failed: true});
         case CLEAR_PAGE:
-            return Object.assign({}, state, {ifFetching: false, content: null, failed: false});
+            return Object.assign({}, state, {isFetching: false, content: null, failed: false});
         default:
             return state;
 
