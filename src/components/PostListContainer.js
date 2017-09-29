@@ -10,10 +10,14 @@ import './PostListContainer.css'
 class PostListContainer extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            currentPage: 1
+        };
         this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     handlePageChange(page) {
+        this.setState({currentPage: page});
         this.props.getPostsList(page);
     }
 
@@ -28,7 +32,7 @@ class PostListContainer extends Component {
                 <PostList posts={posts}/>
                 <Row justify='center' type='flex'>
                     <Pagination className='pagination'
-                                defaultCurrent={1}
+                                current={this.state.currentPage}
                                 onChange={this.handlePageChange}
                                 total={this.props.numberOfPosts === 0 ? 20: this.props.numberOfPosts}
                                 pageSize={10}
