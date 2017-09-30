@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
 
 import './CommentItem.css';
 import CommentTextArea from './CommentTextArea';
@@ -32,7 +32,7 @@ class CommentItem extends Component {
         let reply = '';
         if (parent) {
             let parent_name = parent.author_name || '匿名';
-            reply = (<p className='re'>Re: {parent_name}</p>)
+            reply = (<p className='re'><Icon type="right-square" /> {parent_name}</p>)
         }
 
         let textArea = (<CommentTextArea parentID={comment.id} postID={this.props.postID}/>),
