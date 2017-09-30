@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Input, message, Icon, Row, Col } from 'antd';
 
-
 import { postComment } from '../actions/postComment';
 import './CommentTextArea.css';
 
@@ -10,22 +9,30 @@ class CommentTextArea extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            commentText: ''
+            showedMessage: true
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillUpdate(nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { success, fail, isPosting} = nextProps;
         if (!success && !fail && !isPosting)
             return;
 
-        if (fail) {
-            message.error('评论失败');
+        console.log(this.state.showedMessage);
+        if (fail && !this.state.showedMessage) {
+            message.error('评论失败\n' + nextProps.error_message, 5);
+            this.setState({
+                showedMessage: true
+            })
         }
-        if (success) {
+        else if (success && !this.state.showedMessage) {
             message.success('评论成功');
+            this.props.form.resetFields(['comment']);
+            this.setState({
+                showedMessage: true
+            })
         }
     }
 
@@ -43,6 +50,7 @@ class CommentTextArea extends Component {
             }, this.props.postID,
                 this.props.parentID || 0
             );
+            this.setState({showedMessage: false})
         });
     }
 
@@ -109,7 +117,8 @@ const mapStateToProps = (state) => {
     return {
         isPosting: state.comment.isPosting,
         success: state.comment.success,
-        fail: state.comment.fail
+        fail: state.comment.fail,
+        error_message: state.comment.error_message
     }
 };
 

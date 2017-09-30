@@ -18,9 +18,10 @@ const postingCommentSuccess = () => {
     }
 };
 
-const postingCommentFail = () => {
+const postingCommentFail = (error_message) => {
     return {
-        type: POSTING_THE_COMMENT_FAIL
+        type: POSTING_THE_COMMENT_FAIL,
+        error_message
     }
 };
 
@@ -35,8 +36,6 @@ export const postComment = (comment, postID, parentID = 0, callback) => {
             post: postID,
             content: comment.content
         };
-
-        console.log(postComment, url);
         dispatch(postingComment());
         axios.post(url, postComment)
             .then(response => {
@@ -44,8 +43,7 @@ export const postComment = (comment, postID, parentID = 0, callback) => {
                 dispatch(fetchCommentList(postID));
             })
             .catch(e => {
-                console.log(e);
-                dispatch(postingCommentFail());
+                dispatch(postingCommentFail(e.response.data.message));
             })
     }
 };
