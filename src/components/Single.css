@@ -1,21 +1,21 @@
-.content p {
+.single p {
     padding-bottom: 25px;
     line-height: 200%;
 }
 
-.content .subtitle {
+.single .subtitle {
     color: rgba(157,157,157,0.65);
     padding-bottom: 5px;
 }
 
-.content > h3 {
+.single > h3 {
     padding-top: 20px;
     padding-bottom: 20px;
     font-size: 1.3em;
     font-weight: bold;
 }
 
-.content ol, .content ul {
+.single ol, .single ul {
     font-size: inherit;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -23,12 +23,12 @@
     list-style-position: inside;
 }
 
-.content li {
+.single li {
     list-style: disc;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
-.content img {
+.single img {
     display: block;
 }

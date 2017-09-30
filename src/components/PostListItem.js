@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './PostListItem.css';
+import './content.css';
 
 class PostListItem extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class PostListItem extends Component {
                 <p className='subtitle'>
                     {this.date}<br/>{categories}
                 </p>
-                <div dangerouslySetInnerHTML={excerptObj}/>
+                <div className='content' dangerouslySetInnerHTML={excerptObj}/>
             </div>
         )
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import QueueAnim from 'rc-queue-anim';
 
 import './Single.css';
+import './content.css';
 import CommentList from './CommentList';
 import CommentTextArea from './CommentTextArea';
 
@@ -23,14 +24,14 @@ export default class PostPage extends Component {
 
         return (
             <QueueAnim duration={600}>
-                <div className="content" key={1}>
+                <div className="single" key={1}>
                     <h3>{this.props.single.title.rendered}</h3>
                     <p className='subtitle'>
                         {date}
                         <br/>
 
                     </p>
-                    <div dangerouslySetInnerHTML={content}/>
+                    <div className='content' dangerouslySetInnerHTML={content}/>
                 </div>
                 <CommentTextArea postID={this.props.single.id}/>
                 <CommentList postID={this.props.single.id}/>
