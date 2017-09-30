@@ -34,6 +34,7 @@ class CommentTextArea extends Component {
             if (err) return;
 
             const comment = this.props.form.getFieldsValue();
+            console.log(this.props.parentID);
             this.props.postComment({
                 content: comment.comment,
                 author_name: comment.author,

@@ -21,7 +21,7 @@ class PagePage extends Component {
     }
 
     render() {
-        if (!this.props.page) {
+        if (!this.props.page && this.props.isFetching) {
             return (
                 <Spin spinning={!this.props.page} tip='loading'/>
             )

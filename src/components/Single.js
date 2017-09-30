@@ -13,7 +13,7 @@ export default class PostPage extends Component {
     render() {
         if (!this.props.single) {
             return (
-                <Spin spinning={!this.props.single} tip='loading'/>
+                <p>你来到了一片荒野</p>
             )
         }
 

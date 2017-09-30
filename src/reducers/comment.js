@@ -10,25 +10,29 @@ import {
 } from '../actions/postComment'
 
 const comment = (state = {
-    isPosting: false,
+    isPosting: false,       // Post comments
     success: false,
-    fail: false
+    fail: false,
+
+    postID: -1,              // Retrive comments
+    content: [],
+    isFetching: false,
+    CommentsAmount: 0,
+    supDict: {}
 },  action) => {
     switch (action.type) {
         case REQUEST_COMMENTS_LIST:
             return Object.assign({}, state, {
-                [action.postID]: {
-                    isFetching: true,
-                    CommentsAmount: 0
-                }
+                isFetching: true,
+                postID: action.postID
             });
         case RECEIVE_COMMENTS_LIST:
             return Object.assign({}, state, {
-                [action.postID]: {
-                    isFetching: false,
-                    content: action.data,
-                    CommentsAmount: action.CommentsAmount
-                }
+                postID: action.postID,
+                content: action.data,
+                CommentsAmount: action.CommentsAmount,
+                isFetching: false,
+                supDict: action.supDict
             });
 
         case POSTING_THE_COMMENT:

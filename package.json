@@ -17,8 +17,8 @@
   },
   "scripts": {
     "build-rename": "npm run build-rename-js && npm run build-rename-css",
-    "build-rename-js": "renamer --regex --find 'main\\.[^\\.]+\\.js' --replace 'main.js' build/static/js/*.js && renamer --regex --find 'main\\.[^\\.]+\\.js.map' --replace 'main.js.map' build/static/js/*.js.map",
-    "build-rename-css": "renamer --regex --find 'main\\.[^\\.]+\\.css' --replace 'main.css' build/static/css/*.css && renamer --regex --find 'main\\.[^\\.]+\\.css.map' --replace 'main.css.map' build/static/css/*.css.map",
+    "build-rename-js": "renamer --regex --find 'main\\.[^\\.]+\\.js' --replace 'main.js' build/static/js/*.js",
+    "build-rename-css": "renamer --regex --find 'main\\.[^\\.]+\\.css' --replace 'main.css' build/static/css/*.css",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build && npm run build-rename",
     "test": "react-app-rewired test --env=jsdom",

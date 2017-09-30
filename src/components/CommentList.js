@@ -63,7 +63,12 @@ class CommentList extends Component {
                         const day = date[0],
                             time = date[1];
                         return (
-                            <CommentItem item={comment} parent={commentsObj[comment.parent]} key={comment.id}/>
+                            <CommentItem
+                                item={comment}
+                                postID={this.props.postID}
+                                parent={commentsObj[comment.parent] || this.props.supplementaryDict[comment.parent]}
+                                key={comment.id}
+                            />
                         )
                     });
                 })()}
@@ -90,23 +95,13 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-const mapStateToProps = (state, ownProps) => {
-    let obj = {
-        comments: [],
-        loading: false,
-        amount: 0
-    };
-    if (state.comment[ownProps.postID] && state.comment[ownProps.postID].content) {
-        obj.comments = state.comment[ownProps.postID].content
+const mapStateToProps = (state) => {
+    return {
+        loading: state.comment.isFetching,
+        amount: state.comment.CommentsAmount,
+        comments: state.comment.content,
+        supplementaryDict: state.comment.supDict
     }
-    if (state.comment[ownProps.postID] && state.comment[ownProps.postID].isFetching) {
-        obj.loading = state.comment[ownProps.postID].isFetching
-    }
-    if (state.comment[ownProps.postID] && state.comment[ownProps.postID].CommentsAmount) {
-        obj.amount = state.comment[ownProps.postID].CommentsAmount
-    }
-
-    return obj;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentList);

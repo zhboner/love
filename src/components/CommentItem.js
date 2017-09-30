@@ -35,7 +35,7 @@ class CommentItem extends Component {
             reply = (<p className='re'>Re: {parent_name}</p>)
         }
 
-        let textArea = (<CommentTextArea parentID={comment.id}/>),
+        let textArea = (<CommentTextArea parentID={comment.id} postID={this.props.postID}/>),
             replyButton = (
                 <Button className='reply_button' type='ghost' size='small' htmlType='button' onClick={this.handleReplyButtonClick} icon='enter'>
                     {this.state.showingCommentTextArea ? 'Cancel' : 'Reply'}
