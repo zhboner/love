@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Row, Col} from 'antd';
 
 import PrimaryMenu from './PrimaryMenu';
 import './Header.css';
+import {refreshIndex} from "../actions/sync";
 
 
-export default class Header extends Component {
+class Header extends Component {
     constructor(props) {
         super(props);
         this.info = this.props.info;
@@ -20,7 +22,7 @@ export default class Header extends Component {
         return (
             <Row className="title" type='flex' justify='space-between' align="bottom">
                 <Col>
-                    <Link to='/'><h1>{this.info.name}</h1></Link>
+                    <Link to='/' onClick={this.props.refreshPostList}><h1>{this.info.name}</h1></Link>
                     <h2>{this.info.description}</h2>
                 </Col>
                 <Col>
@@ -30,3 +32,13 @@ export default class Header extends Component {
         )
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        refreshPostList: () => {
+            dispatch(refreshIndex(true))
+        }
+    }
+};
+
+export default connect(null, mapDispatchToProps)(Header);
