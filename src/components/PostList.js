@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import QueueAnim from 'rc-queue-anim';
 
 import PostListItem from './PostListItem';
 import './PostList.css';
@@ -11,7 +12,7 @@ class PostList extends Component {
     render() {
         const posts = this.props.posts;
         return (
-            <div className='post_list'>
+            <QueueAnim className='post_list' duration={600}>
                 {posts.map((single, idx)=>{
                     if (posts[idx + 1]) {
                         return (
@@ -24,7 +25,7 @@ class PostList extends Component {
                         return (<PostListItem single={single} key={single.id}/>)
                     }
                 })}
-            </div>
+            </QueueAnim>
         )
     }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Spin, Pagination, Row } from 'antd';
+import QueueAnim from 'rc-queue-anim';
 
 import { fetchCommentList } from '../actions/fetchCommentList';
 
@@ -43,8 +44,7 @@ class CommentList extends Component {
             commentsObj[comment.id] = comment;
         });
         return (
-            <div className='comment_list'>
-                <Spin spinning={loading} size='large'>
+            <Spin spinning={loading} size='large' className='comment_list'>
                 {(() => {
                     if (loading) {
                         return <div height='200'></div>
@@ -56,21 +56,27 @@ class CommentList extends Component {
                         )
                     }
 
-                    return comments.map((comment) => {
-                        let dangerObj = {__html: comment.content.rendered},
-                            authorName = comment.author_name || '匿名',
-                            date = comment.date.split('T');
-                        const day = date[0],
-                            time = date[1];
-                        return (
-                            <CommentItem
-                                item={comment}
-                                postID={this.props.postID}
-                                parent={commentsObj[comment.parent] || this.props.supplementaryDict[comment.parent]}
-                                key={comment.id}
-                            />
-                        )
-                    });
+                    return (
+                        <QueueAnim duration={600} type='bottom'>
+                            {
+                                comments.map((comment) => {
+                                    let dangerObj = {__html: comment.content.rendered},
+                                        authorName = comment.author_name || '匿名',
+                                        date = comment.date.split('T');
+                                    const day = date[0],
+                                        time = date[1];
+                                    return (
+                                        <CommentItem
+                                            item={comment}
+                                            postID={this.props.postID}
+                                            parent={commentsObj[comment.parent] || this.props.supplementaryDict[comment.parent]}
+                                            key={comment.id}
+                                        />
+                                    )
+                                })
+                            }
+                        </QueueAnim>
+                    )
                 })()}
                 {(()=> {
                     if (amount > 10) {
@@ -82,7 +88,6 @@ class CommentList extends Component {
                     }
                 })()}
             </Spin>
-            </div>
         );
     }
 }

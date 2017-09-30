@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Spin } from 'antd';
+import QueueAnim from 'rc-queue-anim';
 
 import './Single.css';
 import CommentList from './CommentList';
@@ -22,8 +22,8 @@ export default class PostPage extends Component {
         let content = {__html: this.props.single.content.rendered};
 
         return (
-            <div>
-                <div className="content">
+            <QueueAnim duration={600}>
+                <div className="content" key={1}>
                     <h3>{this.props.single.title.rendered}</h3>
                     <p className='subtitle'>
                         {date}
@@ -34,7 +34,7 @@ export default class PostPage extends Component {
                 </div>
                 <CommentTextArea postID={this.props.single.id}/>
                 <CommentList postID={this.props.single.id}/>
-            </div>
+            </QueueAnim>
         )
     }
 }
