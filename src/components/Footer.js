@@ -6,8 +6,8 @@ export default class Footer extends Component {
     render() {
         return (
             <div className='foot'>
-                <p>Powered by Wordpress and React</p>
-                <p>Lovely designed by zhboner</p>
+                <p>自豪地使用Wordpress</p>
+                <p>由zhboner设计</p>
             </div>
         )
     }

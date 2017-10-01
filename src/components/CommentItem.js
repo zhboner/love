@@ -38,7 +38,7 @@ class CommentItem extends Component {
         let textArea = (<CommentTextArea parentID={comment.id} postID={this.props.postID}/>),
             replyButton = (
                 <Button className='reply_button' type='ghost' size='small' htmlType='button' onClick={this.handleReplyButtonClick} icon='enter'>
-                    {this.state.showingCommentTextArea ? 'Cancel' : 'Reply'}
+                    {this.state.showingCommentTextArea ? '取消' : '回复'}
                 </Button>
             );
 
