@@ -12,20 +12,16 @@
 }
 
 .comment_single .avatar {
-    width: 12%;
-    max-width: 70px;
-    min-width: 57px;
-    display: inline-block;
 }
 
 .comment_single .info {
-    width: 88%;
-    display: inline-block;
-    vertical-align: top;
+    padding-left: 20px;
+    flex-shrink: 2;
 }
 
 .comment_single .top {
     padding-bottom: 15px;
+    display: flex;
 }
 
 .comment_single .comment_body {
