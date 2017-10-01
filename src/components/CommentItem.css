@@ -28,22 +28,23 @@
     padding-bottom: 15px;
 }
 
+.comment_single .comment_body {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row nowrap;
+}
+
 .comment_single .comment_content {
-    display: inline-block;
-    width: 85%;
-    margin-right: 3%
+    padding-right: 20px;
 }
 
 .comment_single .comment_content > * {
-    width: 100%;
     display: block;
     word-break: break-all;
 }
 
 .comment_single .reply_button {
-    display: inline-block;
-    vertical-align: text-bottom;
-    text-align: right;
+    align-self: flex-end;
     margin-top: 3%;
 }
 
