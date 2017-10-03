@@ -39,9 +39,9 @@ class CommentTextArea extends Component {
     handleSubmit(e) {
         this.props.form.validateFields(err => {
             if (err) return;
-
             const comment = this.props.form.getFieldsValue();
-            console.log(this.props.parentID);
+
+
             this.props.postComment({
                 content: comment.comment,
                 author_name: comment.author,
@@ -68,38 +68,60 @@ class CommentTextArea extends Component {
                             <TextArea placeholder='评论' rows={4}/>
                         )}
                 </FormItem>
-                <Row>
-                    <Col md={6} sm={6} xs={24}>
-                        <FormItem>
-                            {getFieldDecorator('author', {
-                                rules: [{type: 'string', message: '请输入昵称'}]
-                            })(
-                                <Input placeholder='昵称' addonBefore={<Icon type='user'/>}/>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col md={{span: 6, offset: 3}} sm={{span: 6, offset: 3}} xs={24}>
-                        <FormItem>
-                            {getFieldDecorator('email', {
-                                rules: [{type: 'email', message: '请输入有效的email'}]
-                            })(
-                                <Input placeholder='Email' addonBefore={<Icon type='mail'/>}/>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col md={{span: 6, offset: 3}} sm={{span: 6, offset: 3}} xs={24}>
-                        <FormItem>
-                            {getFieldDecorator('url', {
-                                rules: [{type: 'url', message: '请输入有效的url'}]
-                            })(
-                                <Input placeholder='Website' addonBefore={<Icon type='home'/>}/>
-                            )}
-                        </FormItem>
-                    </Col>
+                {
+                    (() => {
+                        if (!this.props.user) {
+                            return (
+                                <Row>
+                                    <Col md={6} sm={6} xs={24}>
+                                        <FormItem>
+                                            {getFieldDecorator('author', {
+                                                rules: [{type: 'string', message: '请输入昵称'}]
+                                            })(
+                                                <Input placeholder='昵称' addonBefore={<Icon type='user'/>}/>
+                                            )}
+                                        </FormItem>
+                                    </Col>
+                                    <Col md={{span: 6, offset: 3}} sm={{span: 6, offset: 3}} xs={24}>
+                                        <FormItem>
+                                            {getFieldDecorator('email', {
+                                                rules: [{type: 'email', message: '请输入有效的email'}]
+                                            })(
+                                                <Input placeholder='Email' addonBefore={<Icon type='mail'/>}/>
+                                            )}
+                                        </FormItem>
+                                    </Col>
+                                    <Col md={{span: 6, offset: 3}} sm={{span: 6, offset: 3}} xs={24}>
+                                        <FormItem>
+                                            {getFieldDecorator('url', {
+                                                rules: [{type: 'url', message: '请输入有效的url'}]
+                                            })(
+                                                <Input placeholder='Website' addonBefore={<Icon type='home'/>}/>
+                                            )}
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+
+                            )
+                        }
+                    })()
+                }
+                <Row type='flex' justify='space-between'>
+                    <div>
+                        {
+                            (() => {
+                                if (this.props.user) {
+                                    return (
+                                        <p>You are using the nick name: {this.props.user.display_name}</p>
+                                    )
+                                }
+                            })()
+                        }
+                    </div>
+                    <FormItem>
+                        <Button type='default' onClick={this.handleSubmit} loading={this.props.isPosting}>发布</Button>
+                    </FormItem>
                 </Row>
-                <FormItem>
-                    <Button type='default' onClick={this.handleSubmit} loading={this.props.isPosting}>发布</Button>
-                </FormItem>
             </Form>
         )
     }
@@ -115,10 +137,14 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
+        // Comment info
         isPosting: state.comment.isPosting,
         success: state.comment.success,
         fail: state.comment.fail,
-        error_message: state.comment.error_message
+        error_message: state.comment.error_message,
+
+        // User info
+        user: state.info.blogUser
     }
 };
 

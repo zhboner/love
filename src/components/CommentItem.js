@@ -32,7 +32,25 @@ class CommentItem extends Component {
         let reply = '';
         if (parent) {
             let parent_name = parent.author_name || '匿名';
-            reply = (<p className='re'><Icon type="right-square" /> {parent_name}</p>)
+            reply = (
+                <p className='re'>
+                    <Icon type="right-square" /> {parent_name}
+                </p>
+            )
+        }
+
+        let author = '';
+        if (comment.author_url) {
+            author = (
+                <a href={comment.author_url} target="_blank" rel="nofollow">
+                    <strong>{authorName}</strong>
+                </a>
+
+            )
+        } else {
+            author = (
+                <strong>{authorName}</strong>
+            )
         }
 
         let textArea = (<CommentTextArea parentID={comment.id} postID={this.props.postID}/>),
@@ -50,7 +68,7 @@ class CommentItem extends Component {
                     </div>
                     <div className='info'>
                         <p>
-                            <strong>{authorName}</strong>
+                            {author}
                             <br/>
                             {day} {time}
                         </p>

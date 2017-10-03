@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import './Main.css';
 import Header from './Header';
@@ -59,6 +60,13 @@ const mapDispatchToProps = (dispatch)=>{
             dispatch(fetchCategories())
         }
     };
+};
+
+Main.propTypes = {
+    info: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired
+    })
 };
 
 export default connect(null, mapDispatchToProps)(Main);

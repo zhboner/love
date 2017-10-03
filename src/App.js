@@ -1,19 +1,56 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withCookies } from 'react-cookie';
+import PropTypes from 'prop-types';
 
 import { fetchInformation } from './actions/info'
+import { saveUserID, saveUserName, saveUserURL, saveUserEmail } from './actions/sync';
 import './App.css';
 import Main from './components/Main';
 
 
+/*
+*
+*   This component will check all blog info and save them into the redux store.
+*
+* */
 class App extends Component {
     componentDidMount() {
-        this.props.fetchInfo();
+        this.info = null;
+        const { cookies } = this.props;
+
+        // If find object from wordpress, directly use this.
+        if (window.RT_API) {
+            this.info = {
+                name: window.RT_API.siteName,
+                description: window.RT_API.siteDescription
+            };
+
+            // If the visitor is a user, now only me.
+            if (window.RT_API.current_user) {
+                this.props.saveUserID(window.RT_API.current_user.ID);
+                this.props.saveUserName(window.RT_API.current_user.display_name);
+            } else {
+                // Try to load cookie
+
+                this.props.saveUserName(cookies.get('name') || null);
+                this.props.saveUserEmail(cookie.get('email') || null);
+                this.props.saveUserURL(cookie.get('url') || null);
+            }
+        } else {        // Otherwise, load from /wp-json. A async request will be sent.
+            this.props.fetchInfo();
+        }
     }
 
     render() {
         let app = '';
-        if (!this.props.isFetching && this.props.info) {
+
+        if (this.info) {
+            app = (
+                <Main info={this.info}/>
+            )
+        }
+        else if (!this.props.isFetching && this.props.info) {
             app = (
                 <Main info={this.props.info}/>
             )
@@ -38,8 +75,20 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchInfo: () => {
             return dispatch(fetchInformation())
+        },
+        saveUserID: (user) => {
+            return dispatch(saveUserID(user))
+        },
+        saveUserName: (name) => {
+            return dispatch(saveUserName(name))
+        },
+        saveUserURL: (url) => {
+            return dispatch(saveUserURL(url));
+        },
+        saveUserEmail: (email) => {
+            return dispatch(saveUserEmail(email));
         }
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withCookies(connect(mapStateToProps, mapDispatchToProps)(App));
