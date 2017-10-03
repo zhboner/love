@@ -4,6 +4,7 @@ export const BLOG_USER_ID = 'BLOG_USER_ID';
 export const BLOG_USER_NAME = 'BLOG_USER_NAME';
 export const BLOG_USER_EMAIL = 'BLOG_USER_EMAIL';
 export const BLOG_USER_URL = 'BLOG_USER_URL';
+export const BLOG_USER_NONCE = 'BLOG_USER_NONCE';
 
 export const refreshIndex = (refresh) => {
     return {
@@ -37,5 +38,12 @@ export const saveUserURL = (url) => {
     return {
         type: BLOG_USER_URL,
         url: url
+    }
+};
+
+export const saveNonce = (nonce) => {
+    return {
+        type: BLOG_USER_NONCE,
+        nonce: nonce
     }
 };

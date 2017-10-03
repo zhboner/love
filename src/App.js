@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
-import PropTypes from 'prop-types';
 
 import { fetchInformation } from './actions/info'
-import { saveUserID, saveUserName, saveUserURL, saveUserEmail } from './actions/sync';
+import { saveUserID, saveUserName, saveUserURL, saveUserEmail, saveNonce } from './actions/sync';
 import './App.css';
 import Main from './components/Main';
 
@@ -15,7 +14,7 @@ import Main from './components/Main';
 *
 * */
 class App extends Component {
-    componentDidMount() {
+    componentWillMount() {
         this.info = null;
         const { cookies } = this.props;
 
@@ -27,15 +26,16 @@ class App extends Component {
             };
 
             // If the visitor is a user, now only me.
-            if (window.RT_API.current_user) {
+            if (window.RT_API.current_user.ID) {
                 this.props.saveUserID(window.RT_API.current_user.ID);
                 this.props.saveUserName(window.RT_API.current_user.display_name);
+                this.props.saveNonce(window.RT_API.nonce);
             } else {
                 // Try to load cookie
 
                 this.props.saveUserName(cookies.get('name') || null);
-                this.props.saveUserEmail(cookie.get('email') || null);
-                this.props.saveUserURL(cookie.get('url') || null);
+                this.props.saveUserEmail(cookies.get('email') || null);
+                this.props.saveUserURL(cookies.get('url') || null);
             }
         } else {        // Otherwise, load from /wp-json. A async request will be sent.
             this.props.fetchInfo();
@@ -74,13 +74,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchInfo: () => {
-            return dispatch(fetchInformation())
+            return dispatch(fetchInformation());
         },
         saveUserID: (user) => {
-            return dispatch(saveUserID(user))
+            return dispatch(saveUserID(user));
+        },
+        saveNonce: (nonce) => {
+            return dispatch(saveNonce(nonce));
         },
         saveUserName: (name) => {
-            return dispatch(saveUserName(name))
+            return dispatch(saveUserName(name));
         },
         saveUserURL: (url) => {
             return dispatch(saveUserURL(url));

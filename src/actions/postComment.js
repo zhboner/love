@@ -28,21 +28,41 @@ const postingCommentFail = (error_message) => {
 export const postComment = (comment, postID, parentID = 0, callback) => {
     return (dispatch) => {
         const url = config.prefix + 'comments';
-        const postComment = {
-            author_name: comment.author_name || '',
-            author_email: comment.author_email || '',
-            author_url: comment.author_url || '',
+        let instance = {
+            url: url,
+            method: 'post'
+        };
+        let postComment = {
             parent: parentID,
             post: postID,
             content: comment.content
         };
+
+        if (!comment.userID) {
+            postComment = Object.assign({}, postComment, {
+                author_name: comment.author_name || '',
+                author_email: comment.author_email || '',
+                author_url: comment.author_url || ''
+            });
+            instance.data = postComment;
+        } else {
+            postComment = Object.assign({}, postComment, {
+                author: comment.userID,
+            });
+            instance.data = postComment;
+            instance.headers = {
+                'X-WP-Nonce': comment.nonce
+            };
+        }
+        console.log(instance);
         dispatch(postingComment());
-        axios.post(url, postComment)
+        axios.request(url, instance)
             .then(response => {
                 dispatch(postingCommentSuccess());
                 dispatch(fetchCommentList(postID));
             })
             .catch(e => {
+                console.log(e);
                 dispatch(postingCommentFail(e.response.data.message));
             })
     }

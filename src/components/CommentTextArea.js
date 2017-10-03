@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withCookies } from 'react-cookie';
 import { Form, Button, Input, message, Icon, Row, Col } from 'antd';
 
 import { postComment } from '../actions/postComment';
@@ -20,7 +21,6 @@ class CommentTextArea extends Component {
         if (!success && !fail && !isPosting)
             return;
 
-        console.log(this.state.showedMessage);
         if (fail && !this.state.showedMessage) {
             message.error('评论失败\n' + nextProps.error_message, 5);
             this.setState({
@@ -44,13 +44,18 @@ class CommentTextArea extends Component {
 
             this.props.postComment({
                 content: comment.comment,
+                userID: this.props.userID,
+                nonce: this.props.nonce,
                 author_name: comment.author,
                 author_email: comment.email,
                 author_url: comment.url
             }, this.props.postID,
                 this.props.parentID || 0
             );
-            this.setState({showedMessage: false})
+            this.setState({showedMessage: false});
+
+            // Set cookie when author is not blank.
+            const {cookies} = this.props;
         });
     }
 
@@ -70,7 +75,7 @@ class CommentTextArea extends Component {
                 </FormItem>
                 {
                     (() => {
-                        if (!this.props.user) {
+                        if (!this.props.userID) {
                             return (
                                 <Row>
                                     <Col md={6} sm={6} xs={24}>
@@ -101,7 +106,6 @@ class CommentTextArea extends Component {
                                         </FormItem>
                                     </Col>
                                 </Row>
-
                             )
                         }
                     })()
@@ -110,9 +114,9 @@ class CommentTextArea extends Component {
                     <div>
                         {
                             (() => {
-                                if (this.props.user) {
+                                if (this.props.userID) {
                                     return (
-                                        <p>You are using the nick name: {this.props.user.display_name}</p>
+                                        <p>You are using the nick name: {this.props.userName}</p>
                                     )
                                 }
                             })()
@@ -144,8 +148,18 @@ const mapStateToProps = (state) => {
         error_message: state.comment.error_message,
 
         // User info
-        user: state.info.blogUser
+        userID: state.user.id,
+        nonce: state.user.nonce,
+        userName: state.user.userName,
+        userEmail: state.user.userEmail,
+        userURL: state.user.userURL
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create({})(CommentTextArea));
+export default withCookies(
+    connect(mapStateToProps, mapDispatchToProps)(
+        Form.create({})(
+            CommentTextArea
+        )
+    )
+);
