@@ -7,7 +7,7 @@ const postList = (
         isFetching: false,
         pageNO: 0,
         content: [],
-        refresh: false
+        refresh: null
     }, action
 ) => {
     switch(action.type) {

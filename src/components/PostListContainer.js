@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Row, Pagination, Spin } from 'antd';
+import { Spin } from 'antd';
 
 import PostList from './PostList';
 import { saveTheAmountOfPosts } from '../actions/fetchPost';
@@ -11,45 +11,33 @@ import './PostListContainer.css';
 class PostListContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            currentPage: 1
-        };
-        this.handlePageChange = this.handlePageChange.bind(this);
+        this.refreshList = this.refreshList.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.refresh) {
-            this.props.refreshed();
+        this.refreshList(nextProps.refresh);
+    }
 
-            if (this.state.currentPage === 1) {
-                return;
+    refreshList(refresh) {
+        if (refresh) {
+            this.props.refreshed();
+            if (this.props.currentPage !== 1) {
+                this.props.getPostsList();
             }
-            this.handlePageChange(1);
         }
     }
 
-    handlePageChange(page) {
-        this.setState({currentPage: page});
-        this.props.getPostsList(page);
-    }
-
     componentDidMount() {
-        this.props.getPostsList();
+        let refresh = this.props.refresh === null ? true : this.props.refresh;
+
+        this.refreshList(refresh);
     }
 
     render() {
         const posts = this.props.posts;
         return (
             <Spin className='post_list_container' spinning={this.props.isFetching}>
-                <PostList posts={posts}/>
-                <Row justify='center' type='flex'>
-                    <Pagination className='pagination'
-                                current={this.state.currentPage}
-                                onChange={this.handlePageChange}
-                                total={this.props.numberOfPosts === 0 ? 20: this.props.numberOfPosts}
-                                pageSize={10}
-                    />
-                </Row>
+                <PostList posts={posts} numberOfPosts={this.props.numberOfPosts} loadPage={this.props.getPostsList}/>
             </Spin>
         )
     }
@@ -60,7 +48,8 @@ const mapStateToProps = (state)=>{
         numberOfPosts: state.info.postAmount,
         posts: state.postList.content,
         isFetching: state.postList.isFetching,
-        refresh: state.postList.refresh
+        refresh: state.postList.refresh,
+        currentPage: state.postList.pageNO
     }
 };
 

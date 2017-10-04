@@ -37,6 +37,7 @@ const extractExcerpt = (text) => {
 };
 
 
+
 export const fetchPostsList = (pageNO = 1) => {
     let url = config.prefix + 'posts?page=' + pageNO;
     return (dispatch, getState) => {
