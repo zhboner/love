@@ -4,6 +4,7 @@ import { withCookies } from 'react-cookie';
 import { Form, Button, Input, message, Icon, Row, Col } from 'antd';
 
 import { postComment } from '../actions/postComment';
+import { saveUserName, saveUserEmail, saveUserURL} from '../actions/sync';
 import './CommentTextArea.css';
 
 class CommentTextArea extends Component {
@@ -14,9 +15,26 @@ class CommentTextArea extends Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.sendComment = this.sendComment.bind(this);
+        this.setCookie = this.setCookie.bind(this);
+        this.showCommentStatus = this.showCommentStatus.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
+        this.showCommentStatus(nextProps);
+    }
+
+    handleSubmit(e) {
+        this.props.form.validateFields(err => {
+            if (err) return;
+
+            this.sendComment();
+            this.setCookie();
+        });
+    }
+
+    // Show global comment status message
+    showCommentStatus(nextProps) {
         const { success, fail, isPosting} = nextProps;
         if (!success && !fail && !isPosting)
             return;
@@ -36,13 +54,10 @@ class CommentTextArea extends Component {
         }
     }
 
-    handleSubmit(e) {
-        this.props.form.validateFields(err => {
-            if (err) return;
-            const comment = this.props.form.getFieldsValue();
-
-
-            this.props.postComment({
+    // Send comment
+    sendComment() {
+        const comment = this.props.form.getFieldsValue();
+        this.props.postComment({
                 content: comment.comment,
                 userID: this.props.userID,
                 nonce: this.props.nonce,
@@ -50,13 +65,32 @@ class CommentTextArea extends Component {
                 author_email: comment.email,
                 author_url: comment.url
             }, this.props.postID,
-                this.props.parentID || 0
-            );
-            this.setState({showedMessage: false});
+            this.props.parentID || 0
+        );
+        this.setState({showedMessage: false});
+    }
 
-            // Set cookie when author is not blank.
-            const {cookies} = this.props;
-        });
+    // Set cookie when author is not blank.
+    setCookie() {
+        const comment = this.props.form.getFieldsValue();
+        const {author, email, url} = comment;
+        const {cookies} = this.props;
+        const option = {
+            path: '/'
+        };
+
+        if (author) {
+            cookies.set('author', author, option);
+            this.props.saveAuthorName(author);
+        }
+        if (email) {
+            cookies.set('email', email, option);
+            this.props.saveUserEmail(email);
+        }
+        if (email) {
+            cookies.set('url', url, option);
+            this.props.saveUserURL(url);
+        }
     }
 
     render() {
@@ -136,6 +170,15 @@ const mapDispatchToProps = (dispatch) => {
         postComment: (comment, postID, parentID) => {
             return dispatch(postComment(comment, postID, parentID));
         },
+        saveAuthorName: (name) => {
+            return dispatch(saveUserName(name));
+        },
+        saveUserEmail: (email) => {
+            return dispatch(saveUserEmail(email));
+        },
+        saveUserURL: (url) => {
+            return dispatch(saveUserURL(url));
+        }
     }
 };
 
@@ -156,10 +199,21 @@ const mapStateToProps = (state) => {
     }
 };
 
+// Load visitor info from store and set in the form
+const loadVisitorInfo = (props) => {
+    const { userName, userEmail, userURL } = props;
+    console.log(userURL, userEmail, userName);
+    return {
+        'author': {value: userName},
+        'email': {value: userEmail || ''},
+        'url': {value: userURL || ''}
+    }
+};
+
 export default withCookies(
     connect(mapStateToProps, mapDispatchToProps)(
-        Form.create({})(
-            CommentTextArea
-        )
+        Form.create({
+            mapPropsToFields: loadVisitorInfo
+        })(CommentTextArea)
     )
 );

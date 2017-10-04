@@ -33,12 +33,16 @@ class App extends Component {
             } else {
                 // Try to load cookie
 
-                this.props.saveUserName(cookies.get('name') || null);
+                this.props.saveUserName(cookies.get('author') || null);
                 this.props.saveUserEmail(cookies.get('email') || null);
                 this.props.saveUserURL(cookies.get('url') || null);
             }
         } else {        // Otherwise, load from /wp-json. A async request will be sent.
             this.props.fetchInfo();
+
+            this.props.saveUserName(cookies.get('author') || null);
+            this.props.saveUserEmail(cookies.get('email') || null);
+            this.props.saveUserURL(cookies.get('url') || null);
         }
     }
 
