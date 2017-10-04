@@ -35,9 +35,6 @@ class PostList extends Component {
 
     render() {
         const posts = this.props.posts;
-        if (posts.length === 0) {
-            return <div></div>
-        }
         return (
             <QueueAnim className='post_list' duration={600}>
                 {posts.map((single, idx)=>{
