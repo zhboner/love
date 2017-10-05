@@ -10,10 +10,11 @@ const requestCategories = () => {
     }
 };
 
-const receiveCategories = (categories) => {
+const receiveCategories = (idIndex, slugIndex) => {
     return {
         type: RECEIVE_CATEGORIES,
-        categories: categories
+        idIndex: idIndex,
+        slugIndex: slugIndex
     }
 };
 
@@ -25,14 +26,17 @@ export const fetchCategories = () => {
 
         axios.get(url)
             .then(response => {
+                console.log(response.data);
                 return response.data;
             })
             .then(categories => {
-                let result = {};
+                let idIndex = {},
+                    slugIndex = {};
                 categories.map((cat) => {
-                    result[cat.id] = cat.name;
+                    idIndex[cat.id] = cat;
+                    slugIndex[cat.slug] = cat;
                 });
-                dispatch(receiveCategories(result));
+                dispatch(receiveCategories(idIndex, slugIndex));
             })
     }
 };

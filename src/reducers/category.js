@@ -2,7 +2,8 @@ import { RECEIVE_CATEGORIES, REQUEST_CATEGPROES } from '../actions/fetchCategori
 
 const category = (
     state = {
-        categories: {},
+        idIndex: null,
+        slugIndex: null,
         isFetching: false
     }, action
 ) => {
@@ -10,9 +11,7 @@ const category = (
         case REQUEST_CATEGPROES:
             return Object.assign({}, state, {isFetching: true});
         case RECEIVE_CATEGORIES:
-            return Object.assign({}, state, {isFetching: false, categories: action.categories});
-        case 'SAVE_CATEGORIES':
-            return Object.assign({}, state, {categories: action.categories});
+            return Object.assign({}, state, {isFetching: false, idIndex: action.idIndex, slugIndex: action.slugIndex});
         default:
             return state;
     }

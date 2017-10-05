@@ -5,6 +5,9 @@ import { saveTheAmountOfPosts } from './fetchPost'
 export const REQUEST_POSTS_LIST = "REQUEST_POSTS_LIST";
 export const RECEIVE_POSTS_LIST = "RECEIVE_POSTS_LIST";
 
+export const REQUEST_POST_LIST_BY_CATEGORY = 'REQUEST_POST_LIST_BY_CATEGORY';
+export const RECEIVE_POST_LIST_BY_CATEGORY = 'RECEIVE_POST_LIST_BY_CATEGORY';
+
 
 const requestPostsList = (pageNO) => {
     return {
@@ -16,6 +19,20 @@ const requestPostsList = (pageNO) => {
 const receivePostsList = (postsList) => {
     return {
         type: RECEIVE_POSTS_LIST,
+        postsList: postsList
+    }
+};
+
+const requestPostsListByCategory = (pageNO) => {
+    return {
+        type: REQUEST_POST_LIST_BY_CATEGORY,
+        pageNO: pageNO
+    }
+};
+
+const receivePostsListByCateGory = (postsList) => {
+    return {
+        type: RECEIVE_POST_LIST_BY_CATEGORY,
         postsList: postsList
     }
 };
@@ -38,16 +55,28 @@ const extractExcerpt = (text) => {
 
 
 
-export const fetchPostsList = (pageNO = 1) => {
+export const fetchPostsList = (pageNO = 1, category = null) => {
     let url = config.prefix + 'posts?page=' + pageNO;
+
+    if (category) {
+        url = url + '&categories=' + category;
+    }
+
     return (dispatch, getState) => {
 
         // Don't fetch data if cached available
-        if (pageNO === getState().postList.pageNO) {
+        if (!category && pageNO === getState().postList.pageNO) {
+            return;
+
+        } else if (category && pageNO === getState().postListByCategory.pageNO) {
             return;
         }
+        if (category) {
+            dispatch(requestPostsListByCategory(pageNO));
+        } else {
+            dispatch(requestPostsList(pageNO));
+        }
 
-        dispatch(requestPostsList(pageNO));
         return axios.get(url)
             .then(response => {
                 // Save the total number of posts
@@ -71,7 +100,14 @@ export const fetchPostsList = (pageNO = 1) => {
                 return postsList;
             })
             .then(postList => {
-                dispatch(receivePostsList(postList));
+                if (!category) {
+                    dispatch(receivePostsList(postList));
+                } else {
+                    dispatch(receivePostsListByCateGory(postList))
+                }
+            })
+            .catch(e => {
+                console.log(e);
             })
     }
 };

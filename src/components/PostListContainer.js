@@ -36,8 +36,16 @@ class PostListContainer extends Component {
     render() {
         const posts = this.props.posts;
         return (
-            <Spin className='post_list_container' spinning={this.props.isFetching}>
-                <PostList posts={posts} numberOfPosts={this.props.numberOfPosts} loadPage={this.props.getPostsList}/>
+            <Spin className='post_list_container' spinning={this.props.isFetching || this.props.isFetchingCategory}>
+                {
+                    (() => {
+                        if (!this.props.isFetching && !this.props.isFetchingCategory) {
+                            return <PostList posts={posts} numberOfPosts={this.props.numberOfPosts} loadPage={this.props.getPostsList}/>
+                        } else {
+                            return <div width='100%' height='100%'></div>
+                        }
+                    })()
+                }
             </Spin>
         )
     }
@@ -49,7 +57,10 @@ const mapStateToProps = (state)=>{
         posts: state.postList.content,
         isFetching: state.postList.isFetching,
         refresh: state.postList.refresh,
-        currentPage: state.postList.pageNO
+        currentPage: state.postList.pageNO,
+
+        isFetchingCategory: state.category.isFetching
+
     }
 };
 

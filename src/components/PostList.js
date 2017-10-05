@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import QueueAnim from 'rc-queue-anim';
 import { Row, Pagination, Spin } from 'antd';
+import PropTypes from 'prop-types';
 
 import PostListItem from './PostListItem';
 import './PostList.css';
@@ -62,5 +63,11 @@ class PostList extends Component {
         )
     }
 }
+
+PostList.propTypes = {
+    posts: PropTypes.array.isRequired,
+    numberOfPosts: PropTypes.number.isRequired,
+    loadPage: PropTypes.func.isRequired
+};
 
 export default PostList;

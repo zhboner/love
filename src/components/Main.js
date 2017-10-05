@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,6 +8,7 @@ import './Main.css';
 import Header from './Header';
 import Footer from './Footer';
 import PostListContainer from './PostListContainer';
+import CategoryPosts from './CategoryPosts';
 import PostPage from './PostPage';
 import PagePage from './PagePage';
 
@@ -38,6 +39,7 @@ class Main extends Component {
                         <Col md={{span: 12, offset: 6}} sm={{span: 18, offset: 3}} xs={{span: 20, offset: 2}}>
                             <Switch>
                                 <Route exact path='/' component={PostListContainer}/>
+                                <Route path='/posts/category/:slug' component={CategoryPosts}/>
                                 <Route path='/posts/:slug' component={PostPage}/>
                                 <Route path='/:slug' component={PagePage}/>
                             </Switch>
