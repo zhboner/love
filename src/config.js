@@ -2,7 +2,7 @@
 let url;
 if (window.RT_API) {
     url = window.RT_API.root;
-    console.log(window.RT_API)
+    // console.log(window.RT_API)
 } else {
     // window.RT_API = {
     //     root: 'http://localhost:8081',

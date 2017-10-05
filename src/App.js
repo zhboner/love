@@ -28,7 +28,7 @@ class App extends Component {
             // If the visitor is a user, now only me.
             if (window.RT_API.current_user.ID) {
                 this.props.saveUserID(window.RT_API.current_user.ID);
-                this.props.saveUserName(window.RT_API.current_user.display_name);
+                this.props.saveUserName(window.RT_API.current_user.data.display_name);
                 this.props.saveNonce(window.RT_API.nonce);
             } else {
                 // Try to load cookie

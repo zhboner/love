@@ -150,7 +150,7 @@ class CommentTextArea extends Component {
                             (() => {
                                 if (this.props.userID) {
                                     return (
-                                        <p>You are using the nick name: {this.props.userName}</p>
+                                        <p>以 {this.props.userName} 的身份评论</p>
                                     )
                                 }
                             })()
