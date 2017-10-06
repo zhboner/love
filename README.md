@@ -8,7 +8,11 @@ Implemented function:
 - post page
 - dedicated page
 - comment
-
-Todo:
 - category
-- visitor friendly
+
+All needed functions are completed. 
+SO
+The next is 
+test
+test
+test
