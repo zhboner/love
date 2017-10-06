@@ -74,8 +74,8 @@ class CommentItem extends Component {
                     </div>
                 </div>
                 {reply}
-                <div className='comment_body'>
-                    <div className='comment_content' dangerouslySetInnerHTML={dangerObj}/>
+                <div className='comment_content' dangerouslySetInnerHTML={dangerObj}/>
+                <div className='button_container'>
                     {replyButton}
                 </div>
                 {this.state.showingCommentTextArea ? textArea: ''}

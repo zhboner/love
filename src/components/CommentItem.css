@@ -24,14 +24,14 @@
     display: flex;
 }
 
-.comment_single .comment_body {
+.comment_single .button_container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     flex-flow: row nowrap;
 }
 
 .comment_single .comment_content {
-    padding-right: 20px;
+    /*padding-right: 20px;*/
 }
 
 .comment_single .comment_content > * {
@@ -40,7 +40,6 @@
 }
 
 .comment_single .reply_button {
-    align-self: flex-end;
     margin-top: 3%;
 }
 
