@@ -1,6 +1,10 @@
 # Writer
 
-Writer is a wordpress theme building by react. After a week's development, it has shipped basic functions. I will add more functions later.
+Writer is a wordpress theme building by react. I try not to add any hooks to wordpress to make the theme have the best compability. 
+
+It can be used out of box, but to make sure all functions working properly, please set:
+- Wordpress permanant link as /posts/%postname%,
+- Add two pages: About and message board with their slugs as /about-myself and /guestbook respectively.
 
 Implemented function:
 - index page
@@ -11,8 +15,14 @@ Implemented function:
 - category
 
 All needed functions are completed. 
+
 SO
+
 The next is 
+
 test
+
 test
+
 test
+
