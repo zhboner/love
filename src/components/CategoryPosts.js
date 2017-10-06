@@ -10,25 +10,32 @@ class CategoryPosts extends Component {
         super(props);
 
         this.state = {
-            jobWaiting: false
+            jobWaiting: false,      // If the catIndex is pending, then delay loading posts list
+            catID: 0                // store the current category id
         };
         this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     handlePageChange(page) {
-        this.props.fetchList(page);
+        this.props.fetchList(page, this.state.catID);
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.catIndex && this.state.jobWaiting) {
-            this.props.fetchList(1, nextProps.catIndex[this.props.match.params.slug].id);
-            this.setState({jobWaiting: false});
+            this.setState({
+                jobWaiting: false,
+                catID: nextProps.catIndex[this.props.match.params.slug].id
+            }, ()=>{
+                this.props.fetchList(1, this.state.catID);
+            });
         }
     }
 
     componentDidMount() {
         if (this.props.catIndex) {
-            this.props.fetchList(1, this.props.catIndex[this.props.match.params.slug].id);
+            this.setState({catID: this.props.catIndex[this.props.match.params.slug].id}, ()=>{
+                this.props.fetchList(1, this.state.catID)
+            });
         } else {
             this.setState({jobWaiting: true})
         }
@@ -37,17 +44,7 @@ class CategoryPosts extends Component {
     render() {
         return (
             <Spin spinning={this.props.isFetching} size='large'>
-                {
-                    (() => {
-                        if (this.props.isFetching) {
-                            return <div width='100%'></div>
-                        } else {
-                            return (
-                                <PostList posts={this.props.postList} numberOfPosts={this.props.postsAmount} loadPage={this.handlePageChange}/>
-                            )
-                        }
-                    })()
-                }
+                <PostList posts={this.props.postList} numberOfPosts={this.props.postsAmount} loadPage={this.handlePageChange}/>
             </Spin>
         )
     }

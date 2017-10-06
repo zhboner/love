@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Spin } from 'antd';
 
 import './PostListItem.css';
 import './content.css';
+import category from "../reducers/category";
 
 class PostListItem extends Component {
     constructor(props) {
@@ -17,28 +19,26 @@ class PostListItem extends Component {
         let excerpt = single.excerpt.rendered;
         let excerptObj = {__html: excerpt};
 
-        let categories = '';
-        let tmp = 0;
-
-        this.props.single.categories.map((cat) => {
-            if (tmp !== 0) {
-                categories += ' ';
-            }
-            categories += this.props.categories[cat].name;
-            tmp += 1;
-        });
-
         return (
             <div className="item">
                 <h3><strong><Link to={'/posts/' + single.slug}>{single.title.rendered}</Link></strong></h3>
                 <p className='subtitle'>
                     {this.date}
-                    <br/>
+                </p>
                     {
                         (() => {
+                            let tmp = 0;
                             return this.props.single.categories.map((cat) => {
+                                tmp += 1;
+                                if (!this.props.categories) {
+                                    return <Spin size='small' key={tmp}/>
+                                }
+
                                 return (
-                                    <Link to={'/posts/category/' + this.props.categories[cat].slug} key={this.props.categories[cat].id}>
+                                    <Link to={'/posts/category/' + this.props.categories[cat].slug}
+                                          key={this.props.categories[cat].id}
+                                          className='subtitle'
+                                    >
                                         {this.props.categories[cat].name}
                                     </Link>
                                 )
@@ -46,7 +46,6 @@ class PostListItem extends Component {
                             });
                         })()
                     }
-                </p>
                 <div className='content' dangerouslySetInnerHTML={excerptObj}/>
             </div>
         )

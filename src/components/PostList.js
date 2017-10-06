@@ -50,15 +50,22 @@ class PostList extends Component {
                         return (<PostListItem single={single} key={idx}/>)
                     }
                 })}
-                <Row justify='center' type='flex'>
-                    <Pagination className='pagination'
-                                current={this.state.currentPage}
-                                onChange={this.handlePageChange}
-                                total={this.props.numberOfPosts === 0 ? 20: this.props.numberOfPosts}
-                                pageSize={10}
-                                key={posts.length}
-                    />
-                </Row>
+                {
+                    (()=>{
+                        if (this.props.numberOfPosts > 10) {
+                            return (
+                                <Row justify='center' type='flex' key={posts.length}>
+                                    <Pagination className='pagination'
+                                                current={this.state.currentPage}
+                                                onChange={this.handlePageChange}
+                                                total={this.props.numberOfPosts === 0 ? 20: this.props.numberOfPosts}
+                                                pageSize={10}
+                                    />
+                                </Row>
+                            )
+                        }
+                    })()
+                }
             </QueueAnim>
         )
     }

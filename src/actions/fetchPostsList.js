@@ -68,9 +68,8 @@ export const fetchPostsList = (pageNO = 1, category = null) => {
         if (!category && pageNO === getState().postList.pageNO) {
             return;
 
-        } else if (category && pageNO === getState().postListByCategory.pageNO) {
-            return;
         }
+
         if (category) {
             dispatch(requestPostsListByCategory(pageNO));
         } else {
@@ -80,9 +79,10 @@ export const fetchPostsList = (pageNO = 1, category = null) => {
         return axios.get(url)
             .then(response => {
                 // Save the total number of posts
-
                 let amount = parseInt(response.headers['x-wp-total'], 10);
-                dispatch(saveTheAmountOfPosts(amount));
+                if (!category) {
+                    dispatch(saveTheAmountOfPosts(amount));
+                }
                 return response;
             })
             .then(response => {
