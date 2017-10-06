@@ -11,7 +11,6 @@ import './CommentList.css';
 class CommentList extends Component {
     constructor(props) {
         super(props);
-        this.loadComment = this.loadComment.bind(this);
 
         this.state = {
             page: 1
@@ -29,10 +28,10 @@ class CommentList extends Component {
         }
     }
 
-    loadComment(page) {
+    loadComment = (page) => {
         this.setState({page: page});
         this.props.getComments(this.props.postID, page)
-    }
+    };
 
     render() {
         const loading = this.props.loading,
@@ -60,11 +59,6 @@ class CommentList extends Component {
                         <QueueAnim duration={600} type='bottom'>
                             {
                                 comments.map((comment) => {
-                                    let dangerObj = {__html: comment.content.rendered},
-                                        authorName = comment.author_name || '匿名',
-                                        date = comment.date.split('T');
-                                    const day = date[0],
-                                        time = date[1];
                                     return (
                                         <CommentItem
                                             item={comment}

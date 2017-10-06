@@ -13,12 +13,11 @@ class CategoryPosts extends Component {
             jobWaiting: false,      // If the catIndex is pending, then delay loading posts list
             catID: 0                // store the current category id
         };
-        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
-    handlePageChange(page) {
+    handlePageChange = (page) => {
         this.props.fetchList(page, this.state.catID);
-    }
+    };
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.catIndex && this.state.jobWaiting) {

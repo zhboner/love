@@ -1,6 +1,5 @@
 import axios from 'axios';
 import config from '../config';
-import comment from "../reducers/comment";
 
 export const REQUEST_COMMENTS_LIST = 'REQUEST_COMMENTS_LIST';
 export const RECEIVE_COMMENTS_LIST = 'RECEIVE_COMMENTS_LIST';

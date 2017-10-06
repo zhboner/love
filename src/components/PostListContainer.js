@@ -9,23 +9,18 @@ import { refreshIndex } from '../actions/sync';
 import './PostListContainer.css';
 
 class PostListContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.refreshList = this.refreshList.bind(this);
-    }
-
     componentWillReceiveProps(nextProps) {
         this.refreshList(nextProps.refresh);
     }
 
-    refreshList(refresh) {
+    refreshList = (refresh) => {
         if (refresh) {
             this.props.refreshed();
             if (this.props.currentPage !== 1) {
                 this.props.getPostsList();
             }
         }
-    }
+    };
 
     componentDidMount() {
         let refresh = this.props.refresh === null ? true : this.props.refresh;

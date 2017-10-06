@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import QueueAnim from 'rc-queue-anim';
-import { Row, Pagination, Spin } from 'antd';
+import { Row, Pagination } from 'antd';
 import PropTypes from 'prop-types';
 
 import PostListItem from './PostListItem';
@@ -22,17 +22,16 @@ class PostList extends Component {
             currentPage: 1
         };
 
-        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     componentDidUpdate() {
         window.scrollTo(0, 0);
     }
 
-    handlePageChange(page) {
+    handlePageChange = (page) => {
         this.setState({currentPage: page});
         this.props.loadPage(page);
-    }
+    };
 
     render() {
         const posts = this.props.posts;
@@ -69,12 +68,13 @@ class PostList extends Component {
             </QueueAnim>
         )
     }
+
+    static propTypes = {
+        posts: PropTypes.array.isRequired,
+        numberOfPosts: PropTypes.number.isRequired,
+        loadPage: PropTypes.func.isRequired
+    }
 }
 
-PostList.propTypes = {
-    posts: PropTypes.array.isRequired,
-    numberOfPosts: PropTypes.number.isRequired,
-    loadPage: PropTypes.func.isRequired
-};
 
 export default PostList;

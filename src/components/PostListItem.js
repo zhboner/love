@@ -5,7 +5,6 @@ import { Spin } from 'antd';
 
 import './PostListItem.css';
 import './content.css';
-import category from "../reducers/category";
 
 class PostListItem extends Component {
     constructor(props) {

@@ -54,6 +54,13 @@ class Main extends Component {
             </Router>
             )
     }
+
+    static propTypes = {
+        info: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired
+        })
+    }
 }
 
 const mapDispatchToProps = (dispatch)=>{
@@ -62,13 +69,6 @@ const mapDispatchToProps = (dispatch)=>{
             dispatch(fetchCategories())
         }
     };
-};
-
-Main.propTypes = {
-    info: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired
-    })
 };
 
 export default connect(null, mapDispatchToProps)(Main);

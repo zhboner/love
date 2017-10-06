@@ -13,28 +13,23 @@ class CommentTextArea extends Component {
         this.state = {
             showedMessage: true
         };
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.sendComment = this.sendComment.bind(this);
-        this.setCookie = this.setCookie.bind(this);
-        this.showCommentStatus = this.showCommentStatus.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         this.showCommentStatus(nextProps);
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         this.props.form.validateFields(err => {
             if (err) return;
 
             this.sendComment();
             this.setCookie();
         });
-    }
+    };
 
     // Show global comment status message
-    showCommentStatus(nextProps) {
+    showCommentStatus = (nextProps) => {
         const { success, fail, isPosting} = nextProps;
         if (!success && !fail && !isPosting)
             return;
@@ -52,10 +47,10 @@ class CommentTextArea extends Component {
                 showedMessage: true
             })
         }
-    }
+    };
 
     // Send comment
-    sendComment() {
+    sendComment = () => {
         const comment = this.props.form.getFieldsValue();
         this.props.postComment({
                 content: comment.comment,
@@ -68,10 +63,10 @@ class CommentTextArea extends Component {
             this.props.parentID || 0
         );
         this.setState({showedMessage: false});
-    }
+    };
 
     // Set cookie when author is not blank.
-    setCookie() {
+    setCookie = () => {
         const comment = this.props.form.getFieldsValue();
         const {author, email, url} = comment;
         const {cookies} = this.props;
@@ -91,7 +86,7 @@ class CommentTextArea extends Component {
             cookies.set('url', url, option);
             this.props.saveUserURL(url);
         }
-    }
+    };
 
     render() {
         const TextArea = Input.TextArea;

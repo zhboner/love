@@ -10,14 +10,13 @@ class CommentItem extends Component {
         this.state = {
             showingCommentTextArea: false
         };
-        this.handleReplyButtonClick = this.handleReplyButtonClick.bind(this);
     }
 
-    handleReplyButtonClick(e) {
+    handleReplyButtonClick = (e) => {
         this.setState(prevState => {
             return {showingCommentTextArea: !prevState.showingCommentTextArea}
         });
-    }
+    };
 
     render () {
         let comment = this.props.item,
