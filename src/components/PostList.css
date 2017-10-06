@@ -1,5 +1,14 @@
+.post_list {
+    height: 100%;
+}
+
 .post_list hr {
     border: 0;
     height: 1px;
     background-color: rgba(157,157,157,0.2);
+}
+
+.post_list .pagination {
+    padding-top: 20px;
+    padding-bottom: 30px;
 }

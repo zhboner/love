@@ -29,13 +29,13 @@ class Main extends Component {
     render() {
         return (
             <Router>
-                <div>
+                <div className="main_container">
                     <Row className='header'>
                         <Col md={{span: 12, offset: 6}} sm={{span: 18, offset: 3}} xs={{span: 20, offset: 2}}>
                             <Header info={this.props.info}/>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="wrapper">
                         <Col md={{span: 12, offset: 6}} sm={{span: 18, offset: 3}} xs={{span: 20, offset: 2}}>
                             <Switch>
                                 <Route exact path='/' component={PostListContainer}/>
