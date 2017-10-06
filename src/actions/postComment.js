@@ -54,7 +54,6 @@ export const postComment = (comment, postID, parentID = 0, callback) => {
                 'X-WP-Nonce': comment.nonce
             };
         }
-        console.log(instance);
         dispatch(postingComment());
         axios.request(url, instance)
             .then(response => {

@@ -202,7 +202,6 @@ const mapStateToProps = (state) => {
 // Load visitor info from store and set in the form
 const loadVisitorInfo = (props) => {
     const { userName, userEmail, userURL } = props;
-    console.log(userURL, userEmail, userName);
     return {
         'author': {value: userName},
         'email': {value: userEmail || ''},

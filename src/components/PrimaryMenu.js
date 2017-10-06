@@ -14,8 +14,6 @@ class PrimaryMenu extends Component {
         // TODO: This should be tested under wordpress.
         const re_tag = /<li.*>(.*)<\/li>/;
         const tags = instance.match(re_tag);
-        console.log(window.RT_API.menu);
-        console.log(tags);
     }
 
     render() {

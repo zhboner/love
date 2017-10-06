@@ -26,7 +26,6 @@ export const fetchCategories = () => {
 
         axios.get(url)
             .then(response => {
-                console.log(response.data);
                 return response.data;
             })
             .then(categories => {
