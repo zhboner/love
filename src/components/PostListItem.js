@@ -9,11 +9,11 @@ import './content.css';
 class PostListItem extends Component {
     constructor(props) {
         super(props);
-
-        this.date = this.props.single.date.split('T')[0];
     }
 
     render() {
+        this.date = this.props.single.date.split('T')[0];
+
         let single = this.props.single;
         let excerpt = single.excerpt.rendered;
         let excerptObj = {__html: excerpt};
