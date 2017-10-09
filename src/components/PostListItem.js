@@ -21,9 +21,10 @@ class PostListItem extends Component {
         return (
             <div className="item">
                 <h3><strong><Link to={'/posts/' + single.slug}>{single.title.rendered}</Link></strong></h3>
-                <p className='subtitle'>
+                <div className='subtitle'>
                     {this.date}
-                </p>
+                    &nbsp;
+                    &nbsp;
                     {
                         (() => {
                             let tmp = 0;
@@ -45,6 +46,7 @@ class PostListItem extends Component {
                             });
                         })()
                     }
+                </div>
                 <div className='content' dangerouslySetInnerHTML={excerptObj}/>
             </div>
         )

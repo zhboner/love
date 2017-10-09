@@ -4,6 +4,7 @@ import { Spin } from 'antd';
 
 import PostList from './PostList';
 import { fetchPostsList } from '../actions/fetchPostsList';
+import './CategoryPosts.css';
 
 class CategoryPosts extends Component {
     constructor(props) {
@@ -41,8 +42,17 @@ class CategoryPosts extends Component {
     }
 
     render() {
+        if (!this.state.jobWaiting && this.props.catIndex)
+            console.log(this.props.catIndex[this.props.match.params.slug].name);
         return (
             <Spin spinning={this.props.isFetching} size='large'>
+                {
+                    (()=>{
+                        if (this.props.catIndex) {
+                            return <h2 className='category_name'>{this.props.catIndex[this.props.match.params.slug].name}</h2>
+                        }
+                    })()
+                }
                 <PostList posts={this.props.postList} numberOfPosts={this.props.postsAmount} loadPage={this.handlePageChange}/>
             </Spin>
         )

@@ -42,7 +42,7 @@ export const clearCurrentPost = () => {
 };
 
 const extractExcerpt = (text) => {
-    let splitContent = text.split(new RegExp(/<p.*><!--more--><\/p>/, 'i'));
+    let splitContent = text.split(new RegExp(/(<p.*>)?<!--more-->(<\/p>)?/, 'i'));
     let excerpt = splitContent[0],
         content = '';
     if (splitContent[1]) {
@@ -57,7 +57,7 @@ const extractExcerpt = (text) => {
     }
 };
 
-export const fetchSinglePost = (slug) => {
+export const fetchSinglePost = (slug, routerHistory) => {
     return (dispatch, getState) => {
         const postsList = getState().postList.content;
         let result = null;
@@ -81,6 +81,9 @@ export const fetchSinglePost = (slug) => {
                 let content = extractExcerpt(post.content.rendered);
                 post.content.rendered = content.content;
                 dispatch(receiveSinglePost(post));
+            })
+            .catch((e)=>{
+                routerHistory.push('/404');
             })
     }
 };
