@@ -21,13 +21,27 @@ class CategoryPosts extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.catIndex && this.state.jobWaiting) {
-            this.setState({
-                jobWaiting: false,
-                catID: nextProps.catIndex[this.props.match.params.slug].id
-            }, ()=>{
-                this.props.fetchList(1, this.state.catID);
-            });
+        // Only do things when the catIndex is existing
+        if (nextProps.catIndex) {
+            // If it is when the component just mounted, fetch posts and set the flag as false
+            if (this.state.jobWaiting) {
+                this.setState({
+                    jobWaiting: false,
+                    catID: nextProps.catIndex[this.props.match.params.slug].id
+                }, ()=>{
+                    this.props.fetchList(1, this.state.catID);
+                });
+                return;
+            }
+
+            // Switch between categories.
+            if (this.props.catIndex[this.props.match.params.slug].id !== nextProps.catIndex[nextProps.match.params.slug].id) {
+                this.setState({
+                    catID: nextProps.catIndex[nextProps.match.params.slug].id
+                }, ()=>{
+                    this.props.fetchList(1, this.state.catID);
+                });
+            }
         }
     }
 
@@ -42,8 +56,6 @@ class CategoryPosts extends Component {
     }
 
     render() {
-        if (!this.state.jobWaiting && this.props.catIndex)
-            console.log(this.props.catIndex[this.props.match.params.slug].name);
         return (
             <Spin spinning={this.props.isFetching} size='large'>
                 {

@@ -8,24 +8,19 @@ class PrimaryMenu extends Component {
         super(props);
     }
 
-    extractMenu = (instance) => {
-
-        // TODO: This should be tested under wordpress.
-        const re_tag = /<li.*>(.*)<\/li>/;
-        const tags = instance.match(re_tag);
+    handleClick = (e) => {
+        console.log(e);
     };
 
-    render() {
-        // if (!window.RT_API || !window.RT_API.menu) {
-        //     return (<div></div>);
-        // }
-        // this.extractMenu(window.RT_API.menu);
 
+    render() {
         return (
             <div className='primary_menu'>
                 <ul>
-                    <li><Link to='/about-myself'>ABOUT</Link></li>
-                    <li><Link to='/guestbook'>留言板</Link></li>
+                    <li><Link to='/posts/category/dairy'>日志</Link></li>
+                    <li><Link to='/posts/category/notes'>随笔</Link></li>
+                    <li><Link to='/posts/category/booknote'>书摘</Link></li>
+                    <li><Link to='/posts/category/economist'>经济学人</Link></li>
                 </ul>
             </div>
         )

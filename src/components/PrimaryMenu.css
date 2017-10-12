@@ -3,14 +3,23 @@
     padding: 0;
     padding-top: 30px;
     list-style-type: none;
+
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .primary_menu ul li {
     display: inline;
     padding-right: 30px;
+    padding-top: 20px;
     font-weight: bold;
+    flex-shrink: 0;
 }
 
 .primary_menu ul li:last-child {
     padding-right: 0;
+}
+
+.primary_menu .selected {
+    color: #00a854;
 }
