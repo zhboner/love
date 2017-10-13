@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from '../config';
+import { extractExcerpt } from '../lib/extractExcerpt';
 
 export const SAVE_THE_AMOUNT_OF_POSTS = 'SAVE_THE_AMOUNT_OF_POSTS';
 export const REQUEST_SINGLE_POST = 'REQUEST_SINGLE_POST';
@@ -38,22 +39,6 @@ const getPostFromCache = (post) => {
 export const clearCurrentPost = () => {
     return {
         type: CLEAR_CURRENT_POST
-    }
-};
-
-const extractExcerpt = (text) => {
-    let splitContent = text.split(new RegExp(/(<p.*>)?<!--more-->(<\/p>)?/, 'i'));
-    let excerpt = splitContent[0],
-        content = '';
-    if (splitContent[1]) {
-        content = splitContent[0].concat(splitContent[1]);
-    } else {
-        content = excerpt;
-    }
-
-    return {
-        excerpt: excerpt,
-        content: content
     }
 };
 

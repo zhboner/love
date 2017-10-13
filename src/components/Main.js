@@ -48,9 +48,9 @@ class Main extends Component {
                         </Col>
                     </Row>
                     <Row className='footer'>
-                        <Col md={{span: 12, offset: 6}} sm={{span: 18, offset: 3}} xs={{span: 20, offset: 2}}>
+                        {/*<Col md={{span: 12, offset: 6}} sm={{span: 18, offset: 3}} xs={{span: 20, offset: 2}}>*/}
                             <Footer/>
-                        </Col>
+                        {/*</Col>*/}
                     </Row>
                 </div>
             </Router>

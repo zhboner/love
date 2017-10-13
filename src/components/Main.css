@@ -20,5 +20,11 @@
 
     margin-top: 40px;
     text-align: center;
-    background-color: rgba(233,233,233,0.2);
+    background-color: #3e3e3e;
+    color: #eeeeee;
+    font-size: 12px;
+}
+
+.footer a {
+    color: #eeeeee;
 }

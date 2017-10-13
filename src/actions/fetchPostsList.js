@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from '../config';
-import { saveTheAmountOfPosts } from './fetchPost'
+import { saveTheAmountOfPosts } from './fetchPost';
+import { extractExcerpt } from '../lib/extractExcerpt';
 
 export const REQUEST_POSTS_LIST = "REQUEST_POSTS_LIST";
 export const RECEIVE_POSTS_LIST = "RECEIVE_POSTS_LIST";
@@ -36,23 +37,6 @@ const receivePostsListByCateGory = (postsList) => {
         postsList: postsList
     }
 };
-
-const extractExcerpt = (text) => {
-    let splitContent = text.split(new RegExp(/(<p.*>)?<!--more-->(<\/p>)?/, 'i'));
-    let excerpt = splitContent[0],
-        content = '';
-    if (splitContent[1]) {
-        content = splitContent[0].concat(splitContent[1]);
-    } else {
-        content = excerpt;
-    }
-
-    return {
-        excerpt: excerpt,
-        content: content
-    }
-};
-
 
 
 export const fetchPostsList = (pageNO = 1, category = null) => {

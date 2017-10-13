@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { Menu } from 'antd';
 
 import './PrimaryMenu.css'
 
 class PrimaryMenu extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    handleClick = (e) => {
-        console.log(e);
-    };
-
-
     render() {
+        const { Item } = Menu;
         return (
-            <div className='primary_menu'>
-                <ul>
-                    <li><Link to='/posts/category/dairy'>日志</Link></li>
-                    <li><Link to='/posts/category/notes'>随笔</Link></li>
-                    <li><Link to='/posts/category/booknote'>书摘</Link></li>
-                    <li><Link to='/posts/category/economist'>经济学人</Link></li>
-                </ul>
-            </div>
+            <Menu
+                className='primary_menu'
+                mode="horizontal"
+                selectedKeys={[null]}
+            >
+
+                    <Item key="dairy"><Link to='/posts/category/dairy'>日志</Link></Item>
+                    <Item key="notes"><Link to='/posts/category/notes'>随笔</Link></Item>
+                    <Item key="booknote"><Link to='/posts/category/booknote'>书摘</Link></Item>
+                    <Item key="economist"><Link to='/posts/category/economist'>经济学人</Link></Item>
+
+            </Menu>
         )
     }
 }
 
-export default PrimaryMenu;
+export default withRouter(PrimaryMenu);

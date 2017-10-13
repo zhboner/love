@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
-class FooterMenu extends React.PureComponent {
+import './FooterMenu.css';
+
+class FooterMenu extends PureComponent {
     render() {
         return (
-            <div className='footer_menu'>
-                <ul>
-                    <li><Link to='/about-myself'>ABOUT</Link></li>
-                    <li><Link to='/guestbook'>留言板</Link></li>
-                </ul>
-            </div>
+            <ul className='footer_menu'>
+                <li><Link to='/about-myself'>ABOUT</Link></li>
+                <li><Link to='/guestbook'>留言板</Link></li>
+            </ul>
         )
     }
 }
+
+export default FooterMenu;

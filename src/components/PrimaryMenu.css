@@ -1,3 +1,7 @@
+.primary_menu {
+    border: none;
+}
+
 .primary_menu ul {
     margin: 0;
     padding: 0;
