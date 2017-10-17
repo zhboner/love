@@ -33,3 +33,8 @@ class Comments_By_Post_Route extends WP_REST_Controller {
         ));
     }
 }
+
+add_action('rest_api_init', function() {
+    $Custome_Route = new Comments_By_Post_Route();
+    $Custome_Route->register_routes();
+});
