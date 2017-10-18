@@ -12,6 +12,7 @@ import CategoryPosts from './CategoryPosts';
 import PostPage from './PostPage';
 import PagePage from './PagePage';
 import ErrorPage from './ErrorPage';
+import ArchivePage from './ArchivePage';
 
 import { fetchCategories } from '../actions/fetchCategories'
 
@@ -41,6 +42,7 @@ class Main extends Component {
                             <Switch>
                                 <Route exact path='/' component={PostListContainer}/>
                                 <Route exact path='/404' component={ErrorPage}/>
+                                <Route path='/archive' component={ArchivePage}/>
                                 <Route path='/posts/category/:slug' component={CategoryPosts}/>
                                 <Route path='/posts/:slug' component={PostPage}/>
                                 <Route path='/:slug' component={PagePage}/>

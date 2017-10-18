@@ -28,9 +28,6 @@ export const fetchCommentList = (postID, page = 1) => {
         dispatch(requestCommentsList(postID));
         axios.get(url)
             .then((response) => {
-
-            })
-            .then((response) => {
                 const commentList = response.data;
                 let commentObj = changeListToObj(commentList);
 
@@ -120,18 +117,40 @@ const reorderComment = (comments) => {
         return {dict, root, commentDict};
     };
 
-    // TODO: Not finished
+    // Sort the comment list
     const generateCommentsList = (dict, root, commentDict) => {
-        let out = [];
+        let result = [];
 
         for (let i = 0; i < root.length; i++) {
-            out.push(commentDict[root[i]]);
+            let line = [];
+            let node = commentDict[root[i]];
+            line.push(node);
+
             const children = dict[root[i]].children;
-            if (children.length !== 0) {
-                for (let k = 0; k < children.length; k++) {
-                    out.concat(generateCommentsList(dict, children))
-                }
+            let queue = children;
+            while (queue.length !== 0) {
+                let tmp = queue.pop();
+                line.push(commentDict[tmp]);
+                queue.concat(dict[tmp].children)
             }
+
+            line = line.sort((x, y) => {
+                const dateX = new Date(x.comment_date),
+                    dateY = new Date(y.comment_date);
+                if (dateX < dateY) {
+                    return -1;
+                } else if (dateX === dateY) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            });
+            result = result.concat(line);
         }
-    }
+        return result;
+    };
+
+    let tree = buildCommentTree();
+    return generateCommentsList(tree.dict, tree.root, tree.commentDict);
+
 };
