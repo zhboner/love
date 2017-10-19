@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect, PromiseState } from 'react-refetch';
-import Infinite from 'react-infinite';
 import { Link } from 'react-router-dom';
+import { Button } from 'antd';
 
 import config from '../config';
 import './ArchivePage.css';
@@ -24,21 +24,15 @@ class ScrollContainer extends Component {
     };
 
     setLoadingState = (state) => {
-        this.setState({
-            loading: state
-        })
+        this.setState({loading: state})
     };
 
     render() {
         return (
-            <Infinite
-                useWindowAsScrollContainer
-                elementHeight={window.innerHeight}
-                infiniteLoadBeginEdgeOffset={100}
-                onInfiniteLoad={this.loadMore}
-            >
+            <div>
                 <ArchivePage page={this.state.page} setLoadingState={this.setLoadingState}/>
-            </Infinite>
+                <Button type='circle' onClick={this.loadMore} loading={this.state.loading}>More</Button>
+            </div>
         )
     }
 }
@@ -48,7 +42,8 @@ class ArchivePage extends Component {
         super(props);
         this.state = {
             titleList: []
-        }
+        };
+        this.props.setLoadingState(true)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -62,20 +57,38 @@ class ArchivePage extends Component {
         }
     }
 
+
+
     render() {
-        const {titleList} = this.props;
+
         return (
             <div className='archive_page'>
             {
-                this.state.titleList.map((item, idx) => {
-                    return (
-                        <div className='item' key={idx}>
-                            <p>
-                                <Link to={'/posts/' + item.slug}>{item.title.rendered}</Link>
-                            </p>
-                        </div>
-                    )
-                })
+                (()=>{
+                    let currentYear = 0;
+                    return this.state.titleList.map((item, idx) => {
+                        const date = new Date(item.date);
+                        if (date.getFullYear() !== currentYear) {
+                            currentYear = date.getFullYear();
+                            return (
+                                <div className='item' key={idx}>
+                                    <p>{currentYear}</p>
+                                    <p>
+                                        <Link to={'/posts/' + item.slug}>{item.title.rendered}</Link>
+                                    </p>
+                                </div>
+                            )
+                        }
+                        return (
+                            <div className='item' key={idx}>
+                                <p>
+                                    <Link to={'/posts/' + item.slug}>{item.title.rendered}</Link>
+                                </p>
+                            </div>
+                        )
+                    })
+
+                })()
             }
             </div>
         )
@@ -85,7 +98,7 @@ class ArchivePage extends Component {
 
 ArchivePage = connect(props => {
     return {
-        titleList: config.prefix + 'posts?per_page=20&page=' + props.page
+        titleList: config.prefix + 'posts?per_page=15&page=' + props.page
     }
 })(ArchivePage);
 
