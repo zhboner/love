@@ -9,6 +9,7 @@ class FooterMenu extends PureComponent {
             <ul className='footer_menu'>
                 <li><Link to='/about-myself'>ABOUT</Link></li>
                 <li><Link to='/guestbook'>留言板</Link></li>
+                <li><Link to='/archive'>Archive</Link></li>
             </ul>
         )
     }

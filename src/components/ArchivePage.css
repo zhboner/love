@@ -1,4 +1,18 @@
-.archive_page .item {
-    padding-top: 15px;
-    padding-bottom: 15px;
+.archive_page .single {
+    padding-top: 10px;
+}
+
+.archive_page .year {
+    font-weight: bold;
+}
+
+.archive_page .tit {
+    width: 100%;
+    padding-bottom: 0;
+}
+
+.archive_page .tit:hover {
+    text-shadow: 0 0 1px #b0e2df;
+    transition: text-shadow 1s;
+    transition-timing-function: ease-in-out
 }

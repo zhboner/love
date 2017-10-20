@@ -10,8 +10,7 @@ class Comments_By_Post_Route extends WP_REST_Controller {
     public function register_routes() {
         $version = '1';
         $namespace = 'zhboner/v' . $version;
-        $base = 'comments';
-        register_rest_route($namespace, '/' . $base, array(
+        register_rest_route($namespace, '/comments', array(
             'methods'       => WP_REST_Server::READABLE,
             'callback'      => array($this, 'get_items'),
             'args'          => array(
@@ -23,6 +22,11 @@ class Comments_By_Post_Route extends WP_REST_Controller {
                 )
             )
         ));
+
+        register_rest_route($namespace, '/nonce', array(
+            'methods'       => WP_REST_Server::READABLE,
+            'callback'      => array($this, 'get_nonce')
+        ));
     }
 
     public function get_items ($request) {
@@ -31,6 +35,10 @@ class Comments_By_Post_Route extends WP_REST_Controller {
         return get_comments(array(
             'post_id' => $post_id
         ));
+    }
+
+    private function get_nonce() {
+        return wp_create_nonce(-1);
     }
 }
 
