@@ -8,7 +8,7 @@ import postListByCategory from './postListByCategory';
 import comment from './comment'
 import page from './page';
 import user from './user';
-
+import nonce from './nonce';
 
 export default combineReducers({
     post,
@@ -18,5 +18,6 @@ export default combineReducers({
     comment,
     page,
     user,
-    postListByCategory
+    postListByCategory,
+    nonce
 });

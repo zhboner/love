@@ -5,6 +5,7 @@ import { Form, Button, Input, message, Icon, Row, Col } from 'antd';
 
 import { postComment } from '../actions/postComment';
 import { saveUserName, saveUserEmail, saveUserURL} from '../actions/sync';
+import { getNonce } from '../actions/getNonce';
 import './CommentTextArea.css';
 
 class CommentTextArea extends Component {
@@ -17,6 +18,12 @@ class CommentTextArea extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.showCommentStatus(nextProps);
+    }
+
+    componentDidMount() {
+        if (!this.props.nonce.content) {
+            this.props.fetchNonce();
+        }
     }
 
     handleSubmit = (e) => {
@@ -49,13 +56,20 @@ class CommentTextArea extends Component {
         }
     };
 
+    checkNonce = (nextProps) => {
+        if (nextProps.nonce.isFetching || nextProps.nonce.content !== null) {
+            return;
+        }
+        message.error('Please refresh browser to post comments.', 5)
+    };
+
     // Send comment
     sendComment = () => {
         const comment = this.props.form.getFieldsValue();
         this.props.postComment({
                 content: comment.comment,
                 userID: this.props.userID,
-                nonce: this.props.nonce,
+                nonce: this.props.nonce.content,
                 author_name: comment.author,
                 author_email: comment.email,
                 author_url: comment.url
@@ -173,6 +187,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         saveUserURL: (url) => {
             return dispatch(saveUserURL(url));
+        },
+        fetchNonce: () => {
+            return dispatch(getNonce());
         }
     }
 };
@@ -187,10 +204,12 @@ const mapStateToProps = (state) => {
 
         // User info
         userID: state.user.id,
-        nonce: state.user.nonce,
         userName: state.user.userName,
         userEmail: state.user.userEmail,
-        userURL: state.user.userURL
+        userURL: state.user.userURL,
+
+        //Nonce
+        nonce: state.nonce,
     }
 };
 

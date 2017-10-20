@@ -4,6 +4,7 @@ import { withCookies } from 'react-cookie';
 
 import { fetchInformation } from './actions/info'
 import { saveUserID, saveUserName, saveUserURL, saveUserEmail, saveNonce } from './actions/sync';
+import { getNonce } from './actions/getNonce';
 import './App.css';
 import Main from './components/Main';
 
@@ -29,7 +30,7 @@ class App extends Component {
             if (window.RT_API.current_user.ID) {
                 this.props.saveUserID(window.RT_API.current_user.ID);
                 this.props.saveUserName(window.RT_API.current_user.data.display_name);
-                this.props.saveNonce(window.RT_API.nonce);
+                // this.props.saveNonce(window.RT_API.nonce);
             } else {
                 // Try to load cookie
 
@@ -44,6 +45,10 @@ class App extends Component {
             this.props.saveUserEmail(cookies.get('email') || null);
             this.props.saveUserURL(cookies.get('url') || null);
         }
+    }
+
+    componentDidMount() {
+        this.props.fetchNonce();
     }
 
     render() {
@@ -79,6 +84,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchInfo: () => {
             return dispatch(fetchInformation());
+        },
+        fetchNonce: () => {
+            return dispatch(getNonce());
         },
         saveUserID: (user) => {
             return dispatch(saveUserID(user));
