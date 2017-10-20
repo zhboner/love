@@ -25,7 +25,7 @@ class Comments_By_Post_Route extends WP_REST_Controller {
 
         register_rest_route($namespace, '/nonce', array(
             'methods'       => WP_REST_Server::READABLE,
-            'callback'      => array($this, 'get_nonce')
+            'callback'      => array($this, 'get_item')
         ));
     }
 
@@ -37,7 +37,7 @@ class Comments_By_Post_Route extends WP_REST_Controller {
         ));
     }
 
-    private function get_nonce($request) {
+    public function get_item($request) {
         return wp_create_nonce('wp_rest');
     }
 }
