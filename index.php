@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no, user-scalable=no">
     <meta name="theme-color" content="#000000">
     <link rel="manifest" href="/build/manifest.json">
-    <link rel="shortcut icon" href="/build/favicon.ico">
+    <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/build/favicon.ico">
 
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <?php wp_head(); ?>
