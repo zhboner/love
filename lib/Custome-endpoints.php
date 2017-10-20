@@ -37,7 +37,7 @@ class Comments_By_Post_Route extends WP_REST_Controller {
         ));
     }
 
-    private function get_nonce() {
+    private function get_nonce($request) {
         return wp_create_nonce(-1);
     }
 }
