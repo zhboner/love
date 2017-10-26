@@ -1,10 +1,5 @@
 // For dev
-let url;
-if (window.RT_API) {
-    url = window.RT_API.root;
-}
-
-url = 'https://www.zgoing.com';
+let url = 'http://www.zgoing.com:6787';
 const config = {
     home: url,
     prefix: url + '/wp-json/wp/v2/',
