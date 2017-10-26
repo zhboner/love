@@ -24,7 +24,7 @@
     "build-rename-js": "renamer --regex --find 'main\\.[^\\.]+\\.js' --replace 'main.js' build/static/js/*.js",
     "build-rename-css": "renamer --regex --find 'main\\.[^\\.]+\\.css' --replace 'main.css' build/static/css/*.css",
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build && npm run build-rename",
+    "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
