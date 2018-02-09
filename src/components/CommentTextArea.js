@@ -216,11 +216,11 @@ const mapStateToProps = (state) => {
 // Load visitor info from store and set in the form
 const loadVisitorInfo = (props) => {
     const { userName, userEmail, userURL } = props;
-    return {
+    return Form.createFormField({
         'author': {value: userName},
         'email': {value: userEmail || ''},
         'url': {value: userURL || ''}
-    }
+    })
 };
 
 export default withCookies(

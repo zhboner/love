@@ -1,6 +1,8 @@
 .footer_menu {
     display: flex;
     justify-content: flex-start;
+
+    list-style-type: none;
 }
 
 .footer_menu li {

@@ -1,5 +1,5 @@
 // For dev
-let url = 'http://www.zgoing.com:6787';
+let url = 'https://www.zgoing.com';
 const config = {
     home: url,
     prefix: url + '/wp-json/wp/v2/',
