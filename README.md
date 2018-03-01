@@ -16,13 +16,3 @@ Implemented function:
 
 All needed functions are completed. 
 
-SO
-
-The next is 
-
-test
-
-test
-
-test
-
